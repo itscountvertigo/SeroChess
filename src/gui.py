@@ -8,6 +8,7 @@ BLACK_SQUARES_COLOR = [20, 20, 20]
 WHITE_SQUARES_COLOR = [235, 235, 235]
 
 class GUI(arcade.Window):
+    # git ofzo
     def __init__(self, width, height, title):
         super().__init__(width, height, title)
 
