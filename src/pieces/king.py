@@ -1,11 +1,11 @@
-import pieces
+from . import pieces
 
 class King(pieces.Piece):
     # This is the piece class for the king.
     # It inherits from the Piece() parent class in pieces.py
 
     def __init__(self, x, y, color):
-        super().__init__(self, x, y, color)
+        super().__init__(x, y, color)
 
         self.short_castle_allowed = None
         self.long_castle_allowed = None
