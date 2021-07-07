@@ -24,6 +24,14 @@ class King(pieces.Piece):
         legal_squares.append([self.x + 1, self.y]) # right
         legal_squares.append([self.x + 1, self.y + 1]) # top right
 
+        remove_list = []
+        for x in legal_squares:
+            if x[0] < 0 or x[1] < 0:
+                remove_list.append(x)
+
+        for x in remove_list:
+            legal_squares.remove(x)
+        
         return legal_squares
 
     def castle_allowed(self, current_board):
