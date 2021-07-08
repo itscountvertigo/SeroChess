@@ -7,8 +7,20 @@ class Pawn(pieces.Piece):
     def __init__(self, x, y, color):
         super().__init__(x, y, color)
     
-    def legal_moves(self, current_board):
-        pass
+    def legal_moves(self):
+        legal_squares = []
+
+        if self.color == 1:
+            legal_squares.append([self.x, self.y + 1])
+            if self.previous_moves == []:
+                legal_squares.append([self.x, self.y + 2])
+
+        elif self.color == 0:
+            legal_squares.append([self.x, self.y - 1])
+            if self.previous_moves == []:
+                legal_squares.append([self.x, self.y - 2])
+
+        return legal_squares
 
     def en_passant(self, current_board):
         pass

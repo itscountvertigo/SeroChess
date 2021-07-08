@@ -20,6 +20,6 @@ board.append(knight.Knight(6, 7, 0)) # black's knight that starts on g
 board.append(rook.Rook(0, 7, 0)) # black's rook that starts on a
 board.append(rook.Rook(7, 7, 0)) # white's rook that starts on h
 
-for i in range(7):
+for i in range(8):
     board.append(pawn.Pawn(i, 1, 1))
     board.append(pawn.Pawn(i, 6, 0))
