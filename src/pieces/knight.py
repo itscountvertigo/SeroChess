@@ -11,8 +11,6 @@ class Knight(pieces.Piece):
         legal_squares = []
 
         legal_squares.append([self.x + 1, self.y + 2]) # up 2, 1 right (as all following comments, from white's perspective)
-        legal_squares.append([self.x + 1, self.y - 2]) # down 2, 1 right
-
         legal_squares.append([self.x - 1, self.y + 2]) # up 2, 1 left
 
         legal_squares.append([self.x + 2, self.y + 1]) # up 1, 2 right
@@ -22,6 +20,7 @@ class Knight(pieces.Piece):
         legal_squares.append([self.x - 2, self.y - 1]) # down 1, 2 left
         
         legal_squares.append([self.x - 1, self.y - 2]) # down 2, 1 left
+        legal_squares.append([self.x + 1, self.y - 2]) # down 2, 1 right
 
         remove_list = []
         for x in legal_squares:
