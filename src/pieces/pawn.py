@@ -1,6 +1,6 @@
 from . import pieces
 
-class Rook(pieces.Piece):
+class Pawn(pieces.Piece):
     # This is the piece class for the pawn.
     # It inherits from the Piece() parent class in pieces.py
 
