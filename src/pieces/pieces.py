@@ -17,3 +17,9 @@ class Piece():
 
     def get_color(self):
         return self.color
+
+    def description(self):
+        location = chr(ord('`')+(self.x+1)) + str(self.y + 1) # chr(ord('`') + number) converts number to corresponding letter in alphabet
+        b_or_w = "Black's" if self.color == 0 else "White's"
+        class_name = self.__class__.__name__.lower()
+        return "{} {} on {}".format(b_or_w, class_name, location)
