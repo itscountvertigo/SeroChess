@@ -11,18 +11,15 @@ class King(pieces.Piece):
         self.long_castle_allowed = None
 
     def legal_moves(self):
-        legal_squares = []
-
-        legal_squares.append([self.x - 1, self.y -1]) # bottom left (like all following comments, from white's perspective)
-        legal_squares.append([self.x - 1, self.y]) # left
-        legal_squares.append([self.x - 1, self.y + 1]) # top left
-
-        legal_squares.append([self.x, self.y - 1]) # down
-        legal_squares.append([self.x, self.y + 1]) # up
-
-        legal_squares.append([self.x + 1, self.y - 1]) # bottom right
-        legal_squares.append([self.x + 1, self.y]) # right
-        legal_squares.append([self.x + 1, self.y + 1]) # top right
+        legal_squares = [[self.x - 1, self.y - 1],  # bottom left
+                         [self.x - 1, self.y],      # left
+                         [self.x - 1, self.y + 1],  # top left
+                         [self.x, self.y - 1],      # down
+                         [self.x, self.y + 1],      # up
+                         [self.x + 1, self.y - 1],  # bottom right
+                         [self.x + 1, self.y],      # right
+                         [self.x + 1, self.y + 1]   # top right
+                         ]
 
         remove_list = []
         for x in legal_squares:
@@ -35,7 +32,7 @@ class King(pieces.Piece):
         return legal_squares
 
     def castle_allowed(self, current_board):
-        if self.previous_moves == []:
+        if not self.previous_moves:
             # todo: find rook locations, determine for each if short and long castle are allowed
             pass
 
