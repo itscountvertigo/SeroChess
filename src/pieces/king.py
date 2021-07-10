@@ -10,7 +10,7 @@ class King(pieces.Piece):
         self.short_castle_allowed = None
         self.long_castle_allowed = None
 
-    def legal_moves(self):
+    def legal_moves(self, current_board):
         legal_squares = [[self.x - 1, self.y - 1],  # bottom left
                          [self.x - 1, self.y],      # left
                          [self.x - 1, self.y + 1],  # top left
@@ -22,9 +22,12 @@ class King(pieces.Piece):
                          ]
 
         remove_list = []
-        for x in legal_squares:
-            if x[0] < 0 or x[1] < 0:
-                remove_list.append(x)
+        for i in legal_squares:
+            if i[0] < 0 or i[1] < 0:
+                remove_list.append(i)
+            for each in current_board:
+                if i[0] == each.x and i[1] == each.y and each.color == self.color:
+                    remove_list.append(i)
 
         for x in remove_list:
             legal_squares.remove(x)

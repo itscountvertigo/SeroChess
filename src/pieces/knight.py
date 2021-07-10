@@ -7,7 +7,7 @@ class Knight(pieces.Piece):
     def __init__(self, x, y, color):
         super().__init__(x, y, color)
  
-    def legal_moves(self):
+    def legal_moves(self, current_board):
         legal_squares = [[self.x + 1, self.y + 2], [self.x - 1, self.y + 2],  # up 2, 1 left/right
                          [self.x + 2, self.y + 1], [self.x - 2, self.y + 1],  # up 1, 2 left/right
                          [self.x + 2, self.y - 1], [self.x - 2, self.y - 1],  # down 1, 2 left/right
@@ -15,9 +15,12 @@ class Knight(pieces.Piece):
                          ]
 
         remove_list = []
-        for x in legal_squares:
-            if x[0] < 0 or x[1] < 0:
-                remove_list.append(x)
+        for i in legal_squares:
+            if i[0] < 0 or i[1] < 0:
+                remove_list.append(i)
+            for each in current_board:
+                if i[0] == each.x and i[1] == each.y and each.color == self.color:
+                    remove_list.append(i)
 
         for x in remove_list:
             legal_squares.remove(x)
