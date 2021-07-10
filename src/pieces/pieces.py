@@ -20,7 +20,7 @@ class Piece:
 
     def description(self):
         # creates clean string for which color the piece is
-        b_or_w = "Black's" if self.color == 0 else "White's"
+        b_or_w = "Black" if self.color == 0 else "White"
 
         # gets class name (eg. "King" or "Bishop")
         class_name = self.__class__.__name__.lower()
@@ -28,4 +28,4 @@ class Piece:
         # "chr(ord('`') + number)" converts number to corresponding (lowercase) letter in alphabet
         location = chr(ord('`')+(self.x+1)) + str(self.y + 1)
 
-        return "{} {} on {}".format(b_or_w, class_name, location)
+        return "{} {} on {} ({}=[{}, {}])".format(b_or_w, class_name, location, location, self.x, self.y)
