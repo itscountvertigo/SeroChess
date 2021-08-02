@@ -20,26 +20,11 @@ class Rook(pieces.Piece):
             if point_x > 7 or point_y > 7:
                 break
 
-            blocked_by_own_piece = False
-            capturing_piece = False
+            occupied = self.check_occupied(point_x, point_y, current_board)
 
-            for each in current_board:
-                if each.x == point_x and each.y == point_y:
-                    if each.color == self.color:
-                        capturing_piece = False
-                        blocked_by_own_piece = True
-                    else:
-                        capturing_piece = True
-                        blocked_by_own_piece = False
-
-                    break
-                else:
-                    capturing_piece = False
-                    blocked_by_own_piece = False
-
-            if blocked_by_own_piece:
+            if occupied == 2:
                 break
-            elif capturing_piece:
+            elif occupied == 1:
                 legal_squares.append([point_x, point_y])
                 break
             else:
@@ -56,26 +41,11 @@ class Rook(pieces.Piece):
             if point_x > 7 or point_y > 7:
                 break
 
-            blocked_by_own_piece = False
-            capturing_piece = False
+            occupied = self.check_occupied(point_x, point_y, current_board)
 
-            for each in current_board:
-                if each.x == point_x and each.y == point_y:
-                    if each.color == self.color:
-                        capturing_piece = False
-                        blocked_by_own_piece = True
-                    else:
-                        capturing_piece = True
-                        blocked_by_own_piece = False
-
-                    break
-                else:
-                    capturing_piece = False
-                    blocked_by_own_piece = False
-
-            if blocked_by_own_piece:
+            if occupied == 2:
                 break
-            elif capturing_piece:
+            elif occupied == 1:
                 legal_squares.append([point_x, point_y])
                 break
             else:
@@ -92,26 +62,11 @@ class Rook(pieces.Piece):
             if point_x > 7 or point_y > 7:
                 break
 
-            blocked_by_own_piece = False
-            capturing_piece = False
+            occupied = self.check_occupied(point_x, point_y, current_board)
 
-            for each in current_board:
-                if each.x == point_x and each.y == point_y:
-                    if each.color == self.color:
-                        capturing_piece = False
-                        blocked_by_own_piece = True
-                    else:
-                        capturing_piece = True
-                        blocked_by_own_piece = False
-
-                    break
-                else:
-                    capturing_piece = False
-                    blocked_by_own_piece = False
-
-            if blocked_by_own_piece:
+            if occupied == 2:
                 break
-            elif capturing_piece:
+            elif occupied == 1:
                 legal_squares.append([point_x, point_y])
                 break
             else:
@@ -131,23 +86,11 @@ class Rook(pieces.Piece):
             blocked_by_own_piece = False
             capturing_piece = False
 
-            for each in current_board:
-                if each.x == point_x and each.y == point_y:
-                    if each.color == self.color:
-                        capturing_piece = False
-                        blocked_by_own_piece = True
-                    else:
-                        capturing_piece = True
-                        blocked_by_own_piece = False
+            occupied = self.check_occupied(point_x, point_y, current_board)
 
-                    break
-                else:
-                    capturing_piece = False
-                    blocked_by_own_piece = False
-
-            if blocked_by_own_piece:
+            if occupied == 2:
                 break
-            elif capturing_piece:
+            elif occupied == 1:
                 legal_squares.append([point_x, point_y])
                 break
             else:
