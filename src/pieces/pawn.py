@@ -12,7 +12,10 @@ class Pawn(pieces.Piece):
 
         if self.color == 1:
             one_step_allowed = True
-            two_steps_allowed = True
+            two_steps_allowed = False
+
+            if self.previous_moves == []:
+                two_steps_allowed = True
 
             capture_left_allowed = False
             capture_right_allowed = False
@@ -20,28 +23,34 @@ class Pawn(pieces.Piece):
             for each in current_board:
                 if self.x == each.x and self.y + 1 == each.y:
                     one_step_allowed = False
-                if self.x == each.x and self.y + 2 == each.y:
-                    two_steps_allowed = False
-                
+
                 if self.x - 1 == each.x and self.y + 1 == each.y:
                     capture_left_allowed = True
+
                 if self.x + 1 == each.x and self.y + 1 == each.y:
                     capture_right_allowed = True
+            
+            if two_steps_allowed == True:
+                for each in current_board:
+                    if self.x == each.x and self.y + 2 == each.y:
+                        two_steps_allowed = False
 
             if one_step_allowed:
                 legal_squares.append([self.x, self.y + 1])
-            if self.previous_moves == [] and one_step_allowed and two_steps_allowed:
-                legal_squares.append([self.x, self.y + 2])
+                if two_steps_allowed:
+                    legal_squares.append([self.x, self.y + 2])
 
             if capture_left_allowed:
                 legal_squares.append([self.x - 1, self.y + 1])
             if capture_right_allowed:
                 legal_squares.append([self.x + 1, self.y + 1])
 
-
         elif self.color == 0:
             one_step_allowed = True
-            two_steps_allowed = True
+            two_steps_allowed = False
+
+            if self.previous_moves == []:
+                two_steps_allowed = True
 
             capture_left_allowed = False
             capture_right_allowed = False
@@ -49,18 +58,22 @@ class Pawn(pieces.Piece):
             for each in current_board:
                 if self.x == each.x and self.y - 1 == each.y:
                     one_step_allowed = False
-                if self.x == each.x and self.y - 2 == each.y:
-                    two_steps_allowed = False
-                
+
                 if self.x - 1 == each.x and self.y - 1 == each.y:
                     capture_left_allowed = True
+
                 if self.x + 1 == each.x and self.y - 1 == each.y:
                     capture_right_allowed = True
+            
+            if two_steps_allowed == True:
+                for each in current_board:
+                    if self.x == each.x and self.y - 2 == each.y:
+                        two_steps_allowed = False
 
             if one_step_allowed:
                 legal_squares.append([self.x, self.y - 1])
-            if self.previous_moves == [] and one_step_allowed and two_steps_allowed:
-                legal_squares.append([self.x, self.y - 2])
+                if two_steps_allowed:
+                    legal_squares.append([self.x, self.y - 2])
 
             if capture_left_allowed:
                 legal_squares.append([self.x - 1, self.y - 1])
