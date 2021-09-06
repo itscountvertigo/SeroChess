@@ -35,6 +35,12 @@ class Piece:
         else:
             return 0
 
+    def get_x(self):
+        return self.x
+
+    def get_y(self):
+        return self.y
+
     def get_color(self):
         return self.color
 
