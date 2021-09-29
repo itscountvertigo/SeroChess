@@ -45,11 +45,11 @@ class GUI(arcade.Window):
                                                  y * square_height + square_height / 2, 
                                                  square_width, 
                                                  square_height, 
-                                                 self.color_b)
+                                                 self.color_b
+                                                )
 
 def main():
     window = GUI(800, 800, "PWS Chess Engine")
-    # window.setup()
     arcade.run()
 
 if __name__ == "__main__":
