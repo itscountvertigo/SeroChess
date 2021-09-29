@@ -6,6 +6,11 @@ class Knight(pieces.Piece):
 
     def __init__(self, x, y, color):
         super().__init__(x, y, color)
+
+        if color == 0:
+            self.sprite_path = "src/sprites/black/black_knight.png"
+        else:
+            self.sprite_path = "src/sprites/white/white_knight.png"
  
     def legal_moves(self, current_board):
         legal_squares = [[self.x + 1, self.y + 2], [self.x - 1, self.y + 2],  # up 2, 1 left/right

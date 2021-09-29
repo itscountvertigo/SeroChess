@@ -6,6 +6,11 @@ class Bishop(pieces.Piece):
 
     def __init__(self, x, y, color):
         super().__init__(x, y, color)
+
+        if color == 0:
+            self.sprite_path = "src/sprites/black/black_bishop.png"
+        else:
+            self.sprite_path = "src/sprites/white/white_bishop.png"
     
     def legal_moves(self, current_board):
         legal_squares = []

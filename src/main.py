@@ -36,6 +36,11 @@ class GUI(arcade.Window):
     def on_draw(self):
         arcade.start_render()
         self.draw_squares(self.width / 8, self.height / 8)
+        
+        sprites = self.create_sprites(board)
+
+        for each in sprites:
+            arcade.Sprite.draw(each)
 
     def draw_squares(self, square_width, square_height):
         for x in range(8):
@@ -45,8 +50,19 @@ class GUI(arcade.Window):
                                                  y * square_height + square_height / 2, 
                                                  square_width, 
                                                  square_height, 
-                                                 self.color_b
-                                                )
+                                                 self.color_b)
+    
+    def create_sprites(self, pieces):
+        sprites = []
+
+        for each in pieces:
+            new_sprite = arcade.Sprite(each.sprite_path,
+                                       scale=1.2,
+                                       center_x=(each.x * self.width / 8 + self.width / 16), 
+                                       center_y=(each.y * self.height / 8 + self.width / 16))
+            sprites.append(new_sprite)
+
+        return sprites
 
 def main():
     window = GUI(800, 800, "PWS Chess Engine")

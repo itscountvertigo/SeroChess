@@ -7,6 +7,11 @@ class King(pieces.Piece):
     def __init__(self, x, y, color):
         super().__init__(x, y, color)
 
+        if color == 0:
+            self.sprite_path = "src/sprites/black/black_king.png"
+        else:
+            self.sprite_path = "src/sprites/white/white_king.png"
+
         self.short_castle_allowed = None
         self.long_castle_allowed = None
 
