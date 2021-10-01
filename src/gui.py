@@ -1,7 +1,6 @@
 import arcade
 
-from board import board as board
-
+import board
 from coords_to_square import coords_to_square
 
 class GUI(arcade.Window):
@@ -17,8 +16,6 @@ class GUI(arcade.Window):
         self.color_w = [240, 217, 181]
         self.color_b = [181, 136, 99]
 
-        self.who_to_move = 1
-
         self.selected_squares = []
         
         arcade.set_background_color(self.color_w)
@@ -27,7 +24,7 @@ class GUI(arcade.Window):
         arcade.start_render()
         self.draw_squares(self.width / 8, self.height / 8)
         
-        self.draw_sprites(board)
+        self.draw_sprites(board.pieces)
 
         for each in self.selected_squares:
             arcade.draw_circle_filled(each[0] * self.width / 8 + self.width / 16, 
@@ -38,13 +35,13 @@ class GUI(arcade.Window):
     def on_mouse_press(self, x, y, button, modifiers):
         coords = coords_to_square(x, y, self.width)
 
-        for each in board:
-            if each.x == coords[0] and each.y == coords[1] and self.who_to_move == each.color:
-                legal_moves = each.legal_moves(board)
+        for each in board.pieces:
+            if each.x == coords[0] and each.y == coords[1] and board.who_to_move == each.color:
+                legal_moves = each.legal_moves(board.pieces)
 
                 if not each.selecting_squares:
                     self.selected_squares = []
-                    for i in board:
+                    for i in board.pieces:
                         i.selecting_squares = False
 
                     for i in legal_moves:
@@ -52,23 +49,23 @@ class GUI(arcade.Window):
                     each.selecting_squares = True
                 else:
                     self.selected_squares = []
-                    for i in board:
+                    for i in board.pieces:
                         i.selecting_squares = False
 
             else:
                 for square in self.selected_squares:
                     if coords[0] == square[0] and coords[1] == square[1] and each.selecting_squares:
-                        each.move(square[0], square[1], board)
-                        occupied = each.check_occupied(coords[0], coords[1], board)
+                        each.move(square[0], square[1], board.pieces)
+                        occupied = each.check_occupied(coords[0], coords[1], board.pieces)
                         if occupied == 1:
-                            for i in board:
+                            for i in board.pieces:
                                 if coords[0] == i.x and coords[1] == i.y:
-                                    board.remove(i)
+                                    board.pieces.remove(i)
 
-                        self.who_to_move = not self.who_to_move
+                        board.who_to_move = not board.who_to_move
                         
                         self.selected_squares = []
-                        for i in board:
+                        for i in board.pieces:
                             i.selecting_squares = False
 
     def draw_squares(self, square_width, square_height):
