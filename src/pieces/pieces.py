@@ -9,6 +9,8 @@ class Piece:
 
         self.previous_moves = []
 
+        self.selecting_squares = False
+
     def check_occupied(self, x, y, current_board):
         capturing_piece = False
         blocked_by_own_piece = False
@@ -34,6 +36,11 @@ class Piece:
             return 2
         else:
             return 0
+
+    def move(self, new_x, new_y, board):
+        occupied = self.check_occupied(new_x, new_y, board)
+        self.x = new_x
+        self.y = new_y
 
     def get_x(self):
         return self.x
