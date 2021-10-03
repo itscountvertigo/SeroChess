@@ -1,6 +1,8 @@
 import arcade
 
 import board
+
+import generate_move_text
 from coords_to_square import coords_to_square
 
 class GUI(arcade.Window):
@@ -29,47 +31,55 @@ class GUI(arcade.Window):
         # draw circles on the legal moves of a selected piece
         for each in self.selected_squares:
             arcade.draw_circle_filled(each[0] * self.width / 8 + self.width / 16, 
-                                          each[1] * self.width / 8 + self.width / 16, 
-                                          self.width / 32,
-                                          [0, 0, 0, 30])
+                                      each[1] * self.width / 8 + self.width / 16, 
+                                      self.width / 32,
+                                      [0, 0, 0, 30])
 
     def on_mouse_press(self, x, y, button, modifiers):
         coords = coords_to_square(x, y, self.width)
 
-        for each in board.pieces:
+        for piece in board.pieces:
             # if clicked square has a piece:
-            if each.x == coords[0] and each.y == coords[1] and board.who_to_move == each.color:
-                legal_moves = each.legal_moves(board.pieces)
+            if piece.x == coords[0] and piece.y == coords[1] and board.who_to_move == piece.color:
+                legal_moves = piece.legal_moves(board.pieces)
 
                 # if the piece is not selected, remove others' and highlight this one's
-                if not each.selecting_squares:
+                if not piece.selecting_squares:
                     self.selected_squares = []
                     for i in board.pieces:
                         i.selecting_squares = False
 
                     for i in legal_moves:
                         self.selected_squares.append(i)
-                    each.selecting_squares = True
+                    piece.selecting_squares = True
 
                 # if the piece is selected, unselect it (by emptying the selected squares array)
                 else:
                     self.selected_squares = []
                     for i in board.pieces:
                         i.selecting_squares = False
-
             else:
                 # if clicked square is one of a piece's selected and legal moves
                 for square in self.selected_squares:
-                    if coords[0] == square[0] and coords[1] == square[1] and each.selecting_squares:
-                        each.move(square[0], square[1], board.pieces)
-                        
-                        occupied = each.check_occupied(coords[0], coords[1], board.pieces)
+                    if coords[0] == square[0] and coords[1] == square[1] and piece.selecting_squares:
+
+                        occupied = piece.check_occupied(coords[0], coords[1], board.pieces)
+                        formatted_move = generate_move_text.standard_notation(piece.x, piece.y, coords[0], coords[1], piece, occupied)
+                        # formatted_move = generate_move_text.simplified(piece.x, piece.y, coords[0], coords[1])
+
+                        piece.move(square[0], square[1])
 
                         # capturing
                         if occupied == 1: # 1 means there is a piece and it can be captured
                             for i in board.pieces:
-                                if coords[0] == i.x and coords[1] == i.y:
+                                if coords[0] == i.x and coords[1] == i.y and i != piece:
                                     board.pieces.remove(i)
+
+                        piece.previous_moves.append(formatted_move)
+                        board.moves.append(formatted_move)
+
+                        if piece.color == 0:
+                            board.move_num += 1
 
                         # switch whose turn it is
                         board.who_to_move = not board.who_to_move

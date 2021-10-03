@@ -16,3 +16,6 @@ for i in range(8):
     pieces.append(pawn.Pawn(i, 6, 0))  # add black pawns
 
 who_to_move = 1
+
+move_num = 1
+moves = []
