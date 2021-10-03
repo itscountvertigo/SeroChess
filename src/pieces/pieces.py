@@ -7,8 +7,6 @@ class Piece:
         self.y = y
         self.color = color  # 0 for black, 1 for white
 
-        self.previous_moves = []
-
         self.selecting_squares = False
 
     def check_occupied(self, x, y, current_board):

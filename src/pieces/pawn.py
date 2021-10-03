@@ -1,4 +1,6 @@
+from numpy import e
 from . import pieces
+import board
 
 class Pawn(pieces.Piece):
     # This is the piece class for the pawn.
@@ -9,6 +11,11 @@ class Pawn(pieces.Piece):
         self.piece_value = 1
         self.piece_character = ''
 
+        self.in_starting_position = True
+
+        self.enemy_en_passant_left = None
+        self.enemy_en_passant_right = None
+
         if color == 0:
             self.sprite_path = "src/sprites/black/black_pawn.png"
         else:
@@ -17,11 +24,14 @@ class Pawn(pieces.Piece):
     def legal_moves(self, current_board):
         legal_squares = []
 
+        # self.enemy_en_passant_left = None
+        # self.enemy_en_passant_right = None
+
         if self.color == 1:
             one_step_allowed = True
             two_steps_allowed = False
 
-            if self.previous_moves == []:
+            if self.in_starting_position:
                 two_steps_allowed = True
 
             capture_left_allowed = False
@@ -30,11 +40,12 @@ class Pawn(pieces.Piece):
             for each in current_board:
                 if self.x == each.x and self.y + 1 == each.y:
                     one_step_allowed = False
+                    two_steps_allowed = False
 
-                if self.x - 1 == each.x and self.y + 1 == each.y:
+                if self.x - 1 == each.x and self.y + 1 == each.y and self.color != each.color:
                     capture_left_allowed = True
 
-                if self.x + 1 == each.x and self.y + 1 == each.y:
+                if self.x + 1 == each.x and self.y + 1 == each.y and self.color != each.color:
                     capture_right_allowed = True
             
             if two_steps_allowed == True:
@@ -52,11 +63,25 @@ class Pawn(pieces.Piece):
             if capture_right_allowed:
                 legal_squares.append([self.x + 1, self.y + 1])
 
+            if board.moves:
+                en_passant = self.en_passant(board.moves[-1])
+                if en_passant[0]:
+                    legal_squares.append([self.x - 1, self.y + 1])
+                    for piece in current_board:
+                        if piece.x == self.x - 1 and piece.y == self.y:
+                            self.enemy_en_passant_left = piece
+
+                elif en_passant[1]:
+                    legal_squares.append([self.x + 1, self.y + 1])
+                    for piece in current_board:
+                        if piece.x == self.x + 1 and piece.y == self.y:
+                            self.enemy_en_passant_right = piece
+
         elif self.color == 0:
             one_step_allowed = True
             two_steps_allowed = False
 
-            if self.previous_moves == []:
+            if self.in_starting_position:
                 two_steps_allowed = True
 
             capture_left_allowed = False
@@ -65,11 +90,12 @@ class Pawn(pieces.Piece):
             for each in current_board:
                 if self.x == each.x and self.y - 1 == each.y:
                     one_step_allowed = False
+                    two_steps_allowed = False
 
-                if self.x - 1 == each.x and self.y - 1 == each.y:
+                if self.x - 1 == each.x and self.y - 1 == each.y and self.color != each.color:
                     capture_left_allowed = True
 
-                if self.x + 1 == each.x and self.y - 1 == each.y:
+                if self.x + 1 == each.x and self.y - 1 == each.y and self.color != each.color:
                     capture_right_allowed = True
             
             if two_steps_allowed == True:
@@ -87,10 +113,49 @@ class Pawn(pieces.Piece):
             if capture_right_allowed:
                 legal_squares.append([self.x + 1, self.y - 1])
 
+            if board.moves:
+                en_passant = self.en_passant(board.moves[-1])
+                if en_passant[0]:
+                    legal_squares.append([self.x - 1, self.y - 1])
+                    for piece in current_board:
+                        if piece.x == self.x - 1 and piece.y == self.y:
+                            self.enemy_en_passant_left = piece
+
+                if en_passant[1]:
+                    legal_squares.append([self.x + 1, self.y - 1])
+                    for piece in current_board:
+                        if piece.x == self.x + 1 and piece.y == self.y:
+                            self.enemy_en_passant_right = piece
+
         return legal_squares
 
-    def en_passant(self, current_board):
-        pass
+    def en_passant(self, last_move):
+        en_passant_left = False
+        en_passant_right = False
+
+        if self.color == 1 and self.y == 4:
+            prev_move_left = f"{chr(ord('`')+((self.x - 1) + 1)) + str((self.y + 2) + 1)}{chr(ord('`')+((self.x - 1) + 1)) + str(self.y + 1)}"
+            prev_move_right = f"{chr(ord('`')+((self.x + 1) + 1)) + str((self.y + 2) + 1)}{chr(ord('`')+((self.x + 1) + 1)) + str(self.y + 1)}"
+
+            # to left of pawn (from white's perspective)
+            if last_move == prev_move_left:
+                en_passant_left = True
+            # to right of pawn
+            elif last_move == prev_move_right:
+                en_passant_right = True
+        
+        elif self.color == 0 and self.y == 3:
+            prev_move_left = f"{chr(ord('`')+((self.x - 1) + 1)) + str((self.y - 2) + 1)}{chr(ord('`')+((self.x - 1) + 1)) + str(self.y + 1)}"
+            prev_move_right = f"{chr(ord('`')+((self.x + 1) + 1)) + str((self.y - 2) + 1)}{chr(ord('`')+((self.x + 1) + 1)) + str(self.y + 1)}"
+
+            # to left of pawn (from white's perspective)
+            if last_move == prev_move_left:
+                en_passant_left = True
+            # to right of pawn
+            elif last_move == prev_move_right:
+                en_passant_right = True
+        
+        return (en_passant_left, en_passant_right)
 
     def reset(self, x, y):
         self.x = x

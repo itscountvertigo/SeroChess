@@ -8,6 +8,8 @@ class Rook(pieces.Piece):
         self.piece_value = 5
         self.piece_character = 'B'
 
+        self.in_starting_position = True
+
         if color == 0:
             self.sprite_path = "src/sprites/black/black_rook.png"
         else:

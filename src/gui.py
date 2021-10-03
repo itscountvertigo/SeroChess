@@ -62,24 +62,38 @@ class GUI(arcade.Window):
                 # if clicked square is one of a piece's selected and legal moves
                 for square in self.selected_squares:
                     if coords[0] == square[0] and coords[1] == square[1] and piece.selecting_squares:
-
                         occupied = piece.check_occupied(coords[0], coords[1], board.pieces)
-                        formatted_move = generate_move_text.standard_notation(piece.x, piece.y, coords[0], coords[1], piece, occupied)
-                        # formatted_move = generate_move_text.simplified(piece.x, piece.y, coords[0], coords[1])
+
+                        # formatted_move_notation = generate_move_text.standard_notation(piece.x, piece.y, coords[0], coords[1], piece, occupied)
+                        formatted_move = generate_move_text.simplified(piece.x, piece.y, coords[0], coords[1])
 
                         piece.move(square[0], square[1])
+                        board.moves.append(formatted_move)
 
                         # capturing
                         if occupied == 1: # 1 means there is a piece and it can be captured
                             for i in board.pieces:
                                 if coords[0] == i.x and coords[1] == i.y and i != piece:
                                     board.pieces.remove(i)
+                        
+                        piece_type = piece.__class__.__name__
 
-                        piece.previous_moves.append(formatted_move)
-                        board.moves.append(formatted_move)
+                        # en passant capturing
+                        if piece_type == 'Pawn':
+                            for i in board.pieces:
+                                if i == piece.enemy_en_passant_left:
+                                    board.pieces.remove(i)
+                                elif i == piece.enemy_en_passant_right:
+                                    board.pieces.remove(i)
+                        
+                        # making in_starting_position (check for en passant / castling) false
+                        if piece_type == 'Pawn' or piece_type == 'King' or piece_type == 'Rook':
+                            piece.in_starting_position = False
 
+                        # change move num after black moves: one 'move' in chess means one move (ply) by each player
                         if piece.color == 0:
                             board.move_num += 1
+                        board.ply += 1
 
                         # switch whose turn it is
                         board.who_to_move = not board.who_to_move

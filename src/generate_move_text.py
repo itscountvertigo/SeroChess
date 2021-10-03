@@ -15,7 +15,7 @@ def standard_notation(old_x, old_y, new_x, new_y, piece, occupied):
 
     return f"{move_num_txt} {piece_char}{capture_char}{location}{checkmate_char}"
 
-def simplified(old_x, old_y, new_x, new_y, piece):
+def simplified(old_x, old_y, new_x, new_y):
     old_square = chr(ord('`')+(old_x + 1)) + str(old_y + 1)
     new_square = chr(ord('`')+(new_x + 1)) + str(new_y + 1)
 

@@ -14,8 +14,7 @@ class King(pieces.Piece):
         else:
             self.sprite_path = "src/sprites/white/white_king.png"
 
-        self.short_castle_allowed = None
-        self.long_castle_allowed = None
+        self.in_starting_position = True
 
     def legal_moves(self, current_board):
         legal_squares = [[self.x - 1, self.y - 1],  # bottom left
