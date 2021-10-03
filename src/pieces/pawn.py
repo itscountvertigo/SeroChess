@@ -6,6 +6,8 @@ class Pawn(pieces.Piece):
 
     def __init__(self, x, y, color):
         super().__init__(x, y, color)
+        self.piece_value = 1
+        self.piece_character = ''
 
         if color == 0:
             self.sprite_path = "src/sprites/black/black_pawn.png"

@@ -37,8 +37,7 @@ class Piece:
         else:
             return 0
 
-    def move(self, new_x, new_y, board):
-        occupied = self.check_occupied(new_x, new_y, board)
+    def move(self, new_x, new_y):
         self.x = new_x
         self.y = new_y
 

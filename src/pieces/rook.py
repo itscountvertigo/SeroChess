@@ -5,6 +5,8 @@ class Rook(pieces.Piece):
     # It inherits from the Piece() parent class in pieces.py
     def __init__(self, x, y, color):
         super().__init__(x, y, color)
+        self.piece_value = 5
+        self.piece_character = 'B'
 
         if color == 0:
             self.sprite_path = "src/sprites/black/black_rook.png"

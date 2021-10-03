@@ -6,6 +6,8 @@ class King(pieces.Piece):
 
     def __init__(self, x, y, color):
         super().__init__(x, y, color)
+        self.piece_value = 0
+        self.piece_character = 'K'
 
         if color == 0:
             self.sprite_path = "src/sprites/black/black_king.png"
