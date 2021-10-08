@@ -1,6 +1,9 @@
 import board
 
 def standard_notation(old_x, old_y, new_x, new_y, piece, occupied):
+    # This is a function that generates move text in the classic/standard chess notation.
+    # This should not be used in the main list of moves.
+
     move_num_txt = str(board.move_num) + "." if piece.color == 1 else str(board.move_num) + "..."
     piece_char = piece.piece_character
     

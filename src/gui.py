@@ -3,8 +3,10 @@ import arcade
 import board
 
 import generate_move_text
+# import legal_moves_list
 from coords_to_square import coords_to_square
 
+from evaluate import evaluate
 class GUI(arcade.Window):
     """
     The main class for the GUI. This class inherits from the arcade library.
@@ -94,6 +96,8 @@ class GUI(arcade.Window):
                         if piece.color == 0:
                             board.move_num += 1
                         board.ply += 1
+
+                        print(evaluate(board.pieces))
 
                         # switch whose turn it is
                         board.who_to_move = not board.who_to_move
