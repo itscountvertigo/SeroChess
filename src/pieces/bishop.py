@@ -101,7 +101,11 @@ class Bishop(pieces.Piece):
             else:
                 legal_squares.append([point_x, point_y])
 
-        return legal_squares
+        legal_moves = []
+        for each in legal_squares:
+            legal_moves.append(chr(ord('`')+(self.x + 1)) + str(self.y + 1) + chr(ord('`')+(each[0] + 1)) + str(each[1] + 1))
+
+        return legal_moves
 
     def reset(self, x, y):
         self.x = x

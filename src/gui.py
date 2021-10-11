@@ -44,6 +44,14 @@ class GUI(arcade.Window):
             # if clicked square has a piece:
             if piece.x == coords[0] and piece.y == coords[1] and board.who_to_move == piece.color:
                 legal_moves = piece.legal_moves(board.pieces)
+                print(legal_moves)
+
+                legal_squares = []
+                for move in legal_moves:
+                    x = ord(move[2]) - 96 - 1
+                    y = int(move[3]) - 1
+                    print([x, y])
+                    legal_squares.append([x, y])
 
                 # if the piece is not selected, remove others' and highlight this one's
                 if not piece.selecting_squares:
@@ -51,7 +59,7 @@ class GUI(arcade.Window):
                     for i in board.pieces:
                         i.selecting_squares = False
 
-                    for i in legal_moves:
+                    for i in legal_squares:
                         self.selected_squares.append(i)
                     piece.selecting_squares = True
 

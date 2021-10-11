@@ -32,7 +32,11 @@ class Knight(pieces.Piece):
         for x in remove_list:
             legal_squares.remove(x)
 
-        return legal_squares
+        legal_moves = []
+        for each in legal_squares:
+            legal_moves.append(chr(ord('`')+(self.x + 1)) + str(self.y + 1) + chr(ord('`')+(each[0] + 1)) + str(each[1] + 1))
+
+        return legal_moves
 
     def reset(self, x, y):
         self.x = x

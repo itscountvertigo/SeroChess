@@ -127,7 +127,11 @@ class Pawn(pieces.Piece):
                         if piece.x == self.x + 1 and piece.y == self.y:
                             self.enemy_en_passant_right = piece
 
-        return legal_squares
+        legal_moves = []
+        for each in legal_squares:
+            legal_moves.append(chr(ord('`')+(self.x + 1)) + str(self.y + 1) + chr(ord('`')+(each[0] + 1)) + str(each[1] + 1))
+
+        return legal_moves
 
     def en_passant(self, last_move):
         en_passant_left = False
