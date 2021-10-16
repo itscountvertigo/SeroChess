@@ -1,12 +1,14 @@
 import arcade
 
 import board
+import check
 
 import generate_move_text
 # import legal_moves_list
 from coords_to_square import coords_to_square
 
 from evaluate import evaluate
+import move_coords
 class GUI(arcade.Window):
     """
     The main class for the GUI. This class inherits from the arcade library.
@@ -40,6 +42,8 @@ class GUI(arcade.Window):
     def on_mouse_press(self, x, y, button, modifiers):
         coords = coords_to_square(x, y, self.width)
 
+        print(check.check(board.pieces, board.who_to_move))
+
         for piece in board.pieces:
             # if clicked square has a piece:
             if piece.x == coords[0] and piece.y == coords[1] and board.who_to_move == piece.color:
@@ -48,10 +52,7 @@ class GUI(arcade.Window):
 
                 legal_squares = []
                 for move in legal_moves:
-                    x = ord(move[2]) - 96 - 1
-                    y = int(move[3]) - 1
-                    print([x, y])
-                    legal_squares.append([x, y])
+                    legal_squares.append(move_coords.move_to_coords(move))
 
                 # if the piece is not selected, remove others' and highlight this one's
                 if not piece.selecting_squares:

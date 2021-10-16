@@ -1,5 +1,7 @@
 from . import pieces
 
+import move_coords
+
 class Knight(pieces.Piece):
     # This is the piece class for the knight.
     # It inherits from the Piece() parent class in pieces.py
@@ -34,7 +36,8 @@ class Knight(pieces.Piece):
 
         legal_moves = []
         for each in legal_squares:
-            legal_moves.append(chr(ord('`')+(self.x + 1)) + str(self.y + 1) + chr(ord('`')+(each[0] + 1)) + str(each[1] + 1))
+            legal_moves.append(move_coords.coords_to_move(self.x, self.y, each[0], each[1]))
+            # legal_moves.append(chr(ord('`')+(self.x + 1)) + str(self.y + 1) + chr(ord('`')+(each[0] + 1)) + str(each[1] + 1))
 
         return legal_moves
 
