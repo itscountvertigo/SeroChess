@@ -42,8 +42,6 @@ class GUI(arcade.Window):
     def on_mouse_press(self, x, y, button, modifiers):
         coords = coords_to_square(x, y, self.width)
 
-        print(check.check(board.pieces, board.who_to_move))
-
         for piece in board.pieces:
             # if clicked square has a piece:
             if piece.x == coords[0] and piece.y == coords[1] and board.who_to_move == piece.color:
