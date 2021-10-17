@@ -3,8 +3,6 @@ import arcade
 import board
 import check
 
-import generate_move_text
-# import legal_moves_list
 from coords_to_square import coords_to_square
 
 from evaluate import evaluate
@@ -76,7 +74,7 @@ class GUI(arcade.Window):
                         occupied = piece.check_occupied(coords[0], coords[1], board.pieces)
 
                         # formatted_move_notation = generate_move_text.standard_notation(piece.x, piece.y, coords[0], coords[1], piece, occupied)
-                        formatted_move = generate_move_text.simplified(piece.x, piece.y, coords[0], coords[1])
+                        formatted_move = move_coords.coords_to_move(piece.x, piece.y, coords[0], coords[1])
 
                         piece.move(square[0], square[1])
                         board.moves.append(formatted_move)
