@@ -48,7 +48,7 @@ class GUI(arcade.Window):
 
                 legal_squares = []
                 for move in legal_moves:
-                    legal_squares.append(move_coords.move_to_coords(move))
+                    legal_squares.append(move_coords.move_to_coords(move)[1])
 
                 # if the piece is not selected, remove others' and highlight this one's
                 if not piece.selecting_squares:
