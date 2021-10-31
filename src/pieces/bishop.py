@@ -12,9 +12,9 @@ class Bishop(pieces.Piece):
         self.piece_character = 'B'
 
         if color == 0:
-            self.sprite_path = "src/sprites/black/black_bishop.png"
+            self.sprite_path = "assets/default_sprites/black/black_bishop.png"
         else:
-            self.sprite_path = "src/sprites/white/white_bishop.png"
+            self.sprite_path = "assets/default_sprites/white/white_bishop.png"
     
     def legal_moves(self, current_board):
         legal_squares = []

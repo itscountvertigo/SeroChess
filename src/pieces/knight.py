@@ -12,9 +12,9 @@ class Knight(pieces.Piece):
         self.piece_character = 'N'
 
         if color == 0:
-            self.sprite_path = "src/sprites/black/black_knight.png"
+            self.sprite_path = "assets/default_sprites/black/black_knight.png"
         else:
-            self.sprite_path = "src/sprites/white/white_knight.png"
+            self.sprite_path = "assets/default_sprites/white/white_knight.png"
  
     def legal_moves(self, current_board):
         legal_squares = [[self.x + 1, self.y + 2], [self.x - 1, self.y + 2],  # up 2, 1 left/right

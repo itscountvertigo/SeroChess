@@ -11,9 +11,9 @@ class King(pieces.Piece):
         self.piece_character = 'K'
 
         if color == 0:
-            self.sprite_path = "src/sprites/black/black_king.png"
+            self.sprite_path = "assets/default_sprites/black/black_king.png"
         else:
-            self.sprite_path = "src/sprites/white/white_king.png"
+            self.sprite_path = "assets/default_sprites/white/white_king.png"
 
         self.in_starting_position = True
 

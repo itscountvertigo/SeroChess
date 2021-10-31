@@ -13,9 +13,9 @@ class Rook(pieces.Piece):
         self.in_starting_position = True
 
         if color == 0:
-            self.sprite_path = "src/sprites/black/black_rook.png"
+            self.sprite_path = "assets/default_sprites/black/black_rook.png"
         else:
-            self.sprite_path = "src/sprites/white/white_rook.png"
+            self.sprite_path = "assets/default_sprites/white/white_rook.png"
 
     def legal_moves(self, current_board):
         legal_squares = []
