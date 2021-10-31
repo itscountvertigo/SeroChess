@@ -1,12 +1,12 @@
 from piece_heatmap import bishop_map, king_map, knight_map
 
-def evaluate(board):
-    white_value = count_material(board, 1)
-    black_value = count_material(board, 0)
+def evaluate(current_board):
+    white_value = count_material(current_board, 1)
+    black_value = count_material(current_board, 0)
 
     evaluation = white_value - black_value
 
-    for piece in board:
+    for piece in current_board.pieces:
         piece_type = piece.__class__.__name__
         if piece_type == 'Pawn':
             pass
@@ -43,10 +43,10 @@ def evaluate(board):
 
     return round(evaluation, 5)
     
-def count_material(board, color):
+def count_material(current_board, color):
     material_value = 0
 
-    for piece in board:
+    for piece in current_board.pieces:
         if piece.color == color:
             material_value += piece.piece_value
 

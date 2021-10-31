@@ -13,7 +13,7 @@ class Piece:
         capturing_piece = False
         blocked_by_own_piece = False
 
-        for each in current_board:
+        for each in current_board.pieces:
                 if each.x == x and each.y == y:
                     if each.color == self.color:
                         capturing_piece = False

@@ -1,5 +1,4 @@
 from . import pieces
-import board
 
 import move_coords
 
@@ -38,7 +37,7 @@ class Pawn(pieces.Piece):
             capture_left_allowed = False
             capture_right_allowed = False
 
-            for each in current_board:
+            for each in current_board.pieces:
                 if self.x == each.x and self.y + 1 == each.y:
                     one_step_allowed = False
                     two_steps_allowed = False
@@ -50,7 +49,7 @@ class Pawn(pieces.Piece):
                     capture_right_allowed = True
             
             if two_steps_allowed == True:
-                for each in current_board:
+                for each in current_board.pieces:
                     if self.x == each.x and self.y + 2 == each.y:
                         two_steps_allowed = False
 
@@ -64,17 +63,17 @@ class Pawn(pieces.Piece):
             if capture_right_allowed:
                 legal_squares.append([self.x + 1, self.y + 1])
 
-            if board.moves:
-                en_passant = self.en_passant(board.moves[-1])
+            if current_board.moves:
+                en_passant = self.en_passant(current_board.moves[-1])
                 if en_passant[0]:
                     legal_squares.append([self.x - 1, self.y + 1])
-                    for piece in current_board:
+                    for piece in current_board.pieces:
                         if piece.x == self.x - 1 and piece.y == self.y:
                             self.enemy_en_passant_left = piece
 
                 elif en_passant[1]:
                     legal_squares.append([self.x + 1, self.y + 1])
-                    for piece in current_board:
+                    for piece in current_board.pieces:
                         if piece.x == self.x + 1 and piece.y == self.y:
                             self.enemy_en_passant_right = piece
 
@@ -88,7 +87,7 @@ class Pawn(pieces.Piece):
             capture_left_allowed = False
             capture_right_allowed = False
 
-            for each in current_board:
+            for each in current_board.pieces:
                 if self.x == each.x and self.y - 1 == each.y:
                     one_step_allowed = False
                     two_steps_allowed = False
@@ -100,7 +99,7 @@ class Pawn(pieces.Piece):
                     capture_right_allowed = True
             
             if two_steps_allowed == True:
-                for each in current_board:
+                for each in current_board.pieces:
                     if self.x == each.x and self.y - 2 == each.y:
                         two_steps_allowed = False
 
@@ -114,17 +113,17 @@ class Pawn(pieces.Piece):
             if capture_right_allowed:
                 legal_squares.append([self.x + 1, self.y - 1])
 
-            if board.moves:
-                en_passant = self.en_passant(board.moves[-1])
+            if current_board.moves:
+                en_passant = self.en_passant(current_board.moves[-1])
                 if en_passant[0]:
                     legal_squares.append([self.x - 1, self.y - 1])
-                    for piece in current_board:
+                    for piece in current_board.pieces:
                         if piece.x == self.x - 1 and piece.y == self.y:
                             self.enemy_en_passant_left = piece
 
                 if en_passant[1]:
                     legal_squares.append([self.x + 1, self.y - 1])
-                    for piece in current_board:
+                    for piece in current_board.pieces:
                         if piece.x == self.x + 1 and piece.y == self.y:
                             self.enemy_en_passant_right = piece
 

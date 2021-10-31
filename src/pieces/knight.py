@@ -27,7 +27,7 @@ class Knight(pieces.Piece):
         for i in legal_squares:
             if i[0] < 0 or i[1] < 0:
                 remove_list.append(i)
-            for each in current_board:
+            for each in current_board.pieces:
                 if i[0] == each.x and i[1] == each.y and each.color == self.color:
                     remove_list.append(i)
 
