@@ -7,13 +7,16 @@ class King(pieces.Piece):
 
     def __init__(self, x, y, color):
         super().__init__(x, y, color)
-        self.piece_value = 0
+        self.piece_value = 999
         self.piece_character = 'K'
 
         if color == 0:
             self.sprite_path = "assets/default_sprites/black/black_king.png"
         else:
             self.sprite_path = "assets/default_sprites/white/white_king.png"
+
+        self.short_castle_allowed = True
+        self.long_castle_allowed = False
 
         self.in_starting_position = True
 
@@ -44,23 +47,40 @@ class King(pieces.Piece):
             legal_moves.append(move_coords.coords_to_move(self.x, self.y, each[0], each[1]))
             # legal_moves.append(chr(ord('`')+(self.x + 1)) + str(self.y + 1) + chr(ord('`')+(each[0] + 1)) + str(each[1] + 1))
 
+        self.castle_allowed(current_board)
+        print(self.short_castle_allowed, self.long_castle_allowed)
+
+        if self.short_castle_allowed:
+            legal_moves.append("SHORT_CASTLE")
+        if self.long_castle_allowed:
+            legal_moves.append("LONG_CASTLE")
+
         return legal_moves
 
     def castle_allowed(self, current_board):
-        if not self.previous_moves:
-            # todo: find rook locations, determine for each if short and long castle are allowed
-            pass
+        self.short_castle_allowed = False
+        self.long_castle_allowed = False
 
-        else:
+        if not self.in_starting_position:
             # if king has moved, castling isnt allowed at all
-            self.short_castle_allowed = False
-            self.long_castle_allowed = False
+            return
+
+        for piece in current_board.pieces:
+            if piece.__class__.__name__ == "Rook" and piece.color == self.color:
+                if self.color == 1:
+                    if piece.x == 0 and piece.y == 0 and piece.in_starting_position:
+                        self.long_castle_allowed = True
+                    if piece.x == 7 and piece.y == 0 and piece.in_starting_position:
+                        self.short_castle_allowed = True
+                else:
+                    if piece.x == 0 and piece.y == 7 and piece.in_starting_position:
+                        self.long_castle_allowed = True
+                    if piece.x == 7 and piece.y == 7 and piece.in_starting_position:
+                        self.short_castle_allowed = True
 
     def reset(self, x, y):
         self.x = x
         self.y = y
-        
-        self.previous_moves = []
 
         self.short_castle_allowed = True
         self.long_castle_allowed = True

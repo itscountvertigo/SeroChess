@@ -1,6 +1,9 @@
 import board
 
 def move_to_coords(move):
+    if move == "SHORT_CASTLE" or move == "LONG_CASTLE":
+        return [None, move]
+
     old_x = ord(move[0]) - 97
     old_y = int(move[1]) - 1
     

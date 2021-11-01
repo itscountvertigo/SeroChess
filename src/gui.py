@@ -21,6 +21,7 @@ class GUI(arcade.Window):
         self.color_b = [181, 136, 99]
 
         self.selected_squares = []
+        self.legal_moves = []
         
         arcade.set_background_color(self.color_w)
 
@@ -40,16 +41,18 @@ class GUI(arcade.Window):
     def on_mouse_press(self, x, y, button, modifiers):
         coords = coords_to_square(x, y, self.width)
 
-        print(check.mate(board.main_board.pieces, board.main_board.who_to_move))
+        # print(check.mate(board.main_board.pieces, board.main_board.who_to_move))
 
         for piece in board.main_board.pieces:
             # if clicked square has a piece:
             if piece.x == coords[0] and piece.y == coords[1] and board.main_board.who_to_move == piece.color:
-                legal_moves = piece.legal_moves(board.main_board)
-                # print(legal_moves)
+                self.legal_moves = piece.legal_moves(board.main_board)
+                print(self.legal_moves)
 
                 legal_squares = []
-                for move in legal_moves:
+                for move in self.legal_moves:
+                    if move == "SHORT_CASTLE" or move == "LONG_CASTLE":
+                        continue
                     legal_squares.append(move_coords.move_to_coords(move)[1])
 
                 # if the piece is not selected, remove others' and highlight this one's
@@ -57,6 +60,12 @@ class GUI(arcade.Window):
                     self.selected_squares = []
                     for i in board.main_board.pieces:
                         i.selecting_squares = False
+
+                    if piece.__class__.__name__ == "King":
+                        if piece.short_castle_allowed:
+                            self.selected_squares.append([6,0] if piece.color == 1 else [6,7])
+                        if piece.long_castle_allowed:
+                            self.selected_squares.append([2,0] if piece.color == 1 else [2,7])
 
                     for i in legal_squares:
                         self.selected_squares.append(i)
@@ -76,6 +85,12 @@ class GUI(arcade.Window):
                         # formatted_move_notation = generate_move_text.standard_notation(piece.x, piece.y, coords[0], coords[1], piece, occupied)
                         formatted_move = move_coords.coords_to_move(piece.x, piece.y, coords[0], coords[1])
 
+                        if piece.__class__.__name__ == "King":
+                            if piece.short_castle_allowed and square[0] == 6 and square[1] == 0 if piece.color == 1 else 7:
+                                formatted_move = "SHORT_CASTLE"
+                            if piece.long_castle_allowed and square[0] == 2 and square[1] == 0 if piece.color == 1 else 7:
+                                formatted_move == "SHORT_CASTLE"
+
                         board.main_board.move(formatted_move)
                         board.main_board.moves.append(formatted_move)
 
@@ -86,18 +101,18 @@ class GUI(arcade.Window):
                                     board.main_board.pieces.remove(i)
                         
                         piece_type = piece.__class__.__name__
-
-                        # en passant capturing
-                        if piece_type == 'Pawn':
-                            for i in board.main_board.pieces:
-                                if i == piece.enemy_en_passant_left:
-                                    board.main_board.pieces.remove(i)
-                                elif i == piece.enemy_en_passant_right:
-                                    board.main_board.pieces.remove(i)
                         
                         # making in_starting_position (check for en passant / castling) false
                         if piece_type == 'Pawn' or piece_type == 'King' or piece_type == 'Rook':
                             piece.in_starting_position = False
+
+                            # en passant capturing
+                            if piece_type == 'Pawn':
+                                for i in board.main_board.pieces:
+                                    if i == piece.enemy_en_passant_left:
+                                        board.main_board.pieces.remove(i)
+                                    elif i == piece.enemy_en_passant_right:
+                                        board.main_board.pieces.remove(i)
 
                         # change move num after black moves: one 'move' in chess means one move (ply) by each player
                         if piece.color == 0:
