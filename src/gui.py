@@ -62,9 +62,9 @@ class GUI(arcade.Window):
                         i.selecting_squares = False
 
                     if piece.__class__.__name__ == "King":
-                        if piece.short_castle_allowed:
+                        if piece.short_castle_allowed(board.main_board):
                             self.selected_squares.append([6,0] if piece.color == 1 else [6,7])
-                        if piece.long_castle_allowed:
+                        if piece.long_castle_allowed(board.main_board):
                             self.selected_squares.append([2,0] if piece.color == 1 else [2,7])
 
                     for i in legal_squares:
@@ -86,10 +86,10 @@ class GUI(arcade.Window):
                         formatted_move = move_coords.coords_to_move(piece.x, piece.y, coords[0], coords[1])
 
                         if piece.__class__.__name__ == "King":
-                            if piece.short_castle_allowed and square[0] == 6 and square[1] == 0 if piece.color == 1 else 7:
+                            if piece.short_castle_allowed(board.main_board) and square[0] == 6 and square[1] == 0 if (piece.color == 1) else 7:
                                 formatted_move = "SHORT_CASTLE"
-                            if piece.long_castle_allowed and square[0] == 2 and square[1] == 0 if piece.color == 1 else 7:
-                                formatted_move == "SHORT_CASTLE"
+                            elif piece.long_castle_allowed(board.main_board) and square[0] == 2 and square[1] == 0 if (piece.color == 1) else 7:
+                                formatted_move = "LONG_CASTLE"
 
                         board.main_board.move(formatted_move)
                         board.main_board.moves.append(formatted_move)
@@ -103,7 +103,7 @@ class GUI(arcade.Window):
                         piece_type = piece.__class__.__name__
                         
                         # making in_starting_position (check for en passant / castling) false
-                        if piece_type == 'Pawn' or piece_type == 'King' or piece_type == 'Rook':
+                        if piece_type == "Pawn" or piece_type == "King" or piece_type == "Rook":
                             piece.in_starting_position = False
 
                             # en passant capturing
