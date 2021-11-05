@@ -15,9 +15,6 @@ class King(pieces.Piece):
         else:
             self.sprite_path = "assets/default_sprites/white/white_king.png"
 
-        self.short_castle_allowed = True
-        self.long_castle_allowed = False
-
         self.in_starting_position = True
 
     def legal_moves(self, current_board):
@@ -47,36 +44,51 @@ class King(pieces.Piece):
             legal_moves.append(move_coords.coords_to_move(self.x, self.y, each[0], each[1]))
             # legal_moves.append(chr(ord('`')+(self.x + 1)) + str(self.y + 1) + chr(ord('`')+(each[0] + 1)) + str(each[1] + 1))
 
-        self.castle_allowed(current_board)
-        print(self.short_castle_allowed, self.long_castle_allowed)
-
-        if self.short_castle_allowed:
+        if self.short_castle_allowed(current_board):
             legal_moves.append("SHORT_CASTLE")
-        if self.long_castle_allowed:
+        if self.long_castle_allowed(current_board):
             legal_moves.append("LONG_CASTLE")
 
         return legal_moves
 
-    def castle_allowed(self, current_board):
-        self.short_castle_allowed = False
-        self.long_castle_allowed = False
-
+    def short_castle_allowed(self, current_board):
         if not self.in_starting_position:
             # if king has moved, castling isnt allowed at all
-            return
+            return False
+
+        for piece in current_board.pieces:
+            if self.color == 1:
+                if piece.__class__.__name__ == "Rook" and piece.color == self.color:
+                        if piece.x != 7 or piece.y != 0 or not piece.in_starting_position:
+                            return False
+                if (piece.x == 5 or piece.x == 6) and piece.y == 0:
+                    return False
+
+            else:
+                if piece.__class__.__name__ == "Rook" and piece.color == self.color:
+                    if piece.x != 7 or piece.y != 7 or not piece.in_starting_position:
+                        return False
+
+                if (piece.x == 5 or piece.x == 6) and piece.y == 7:
+                    return False
+
+            return True
+
+    def long_castle_allowed(self, current_board):
+        if not self.in_starting_position:
+            # if king has moved, castling isnt allowed at all
+            return False
 
         for piece in current_board.pieces:
             if piece.__class__.__name__ == "Rook" and piece.color == self.color:
                 if self.color == 1:
-                    if piece.x == 0 and piece.y == 0 and piece.in_starting_position:
-                        self.long_castle_allowed = True
-                    if piece.x == 7 and piece.y == 0 and piece.in_starting_position:
-                        self.short_castle_allowed = True
+                    if piece.x != 0 or piece.y != 0 or not piece.in_starting_position:
+                        return False
                 else:
-                    if piece.x == 0 and piece.y == 7 and piece.in_starting_position:
-                        self.long_castle_allowed = True
-                    if piece.x == 7 and piece.y == 7 and piece.in_starting_position:
-                        self.short_castle_allowed = True
+                    if piece.x != 0 or piece.y != 7 or not piece.in_starting_position:
+                        return False
+
+            return True
 
     def reset(self, x, y):
         self.x = x

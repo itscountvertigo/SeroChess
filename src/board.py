@@ -33,7 +33,10 @@ class Board():
                 if piece.__class__.__name__ == "King" and piece.color == self.who_to_move:
                     piece.x = 2
 
+                print(piece.__class__.__name__, piece.color, piece.x)
+
                 if piece.__class__.__name__ == "Rook" and piece.color == self.who_to_move and piece.x == 0:
+                    print("here")
                     piece.x = 3
 
             if piece.color == 0:
