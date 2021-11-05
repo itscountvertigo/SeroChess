@@ -1,7 +1,7 @@
 from pieces import king, queen, rook, knight, bishop, pawn
 
 import move_coords
-import fen_import
+from fen_import import read_FEN
 
 class Board():
     def __init__(self, position, who_to_move, move_num, ply, moves):
@@ -77,4 +77,4 @@ class Board():
 #     return starting_position
 
 def init():
-    main_board = Board(fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"), 1, 1, 0, [])
+    main_board = Board(read_FEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"), 1, 1, 0, [])
