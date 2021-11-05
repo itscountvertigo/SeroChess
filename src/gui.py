@@ -1,12 +1,13 @@
 import arcade
 
 import board
-import check
+# import check
 
 from coords_to_square import coords_to_square
 
 from evaluate import evaluate
 import move_coords
+
 class GUI(arcade.Window):
     """
     The main class for the GUI. This class inherits from the arcade library.
@@ -60,12 +61,13 @@ class GUI(arcade.Window):
                     self.selected_squares = []
                     for i in board.main_board.pieces:
                         i.selecting_squares = False
-
+                    """
                     if piece.__class__.__name__ == "King":
                         if piece.short_castle_allowed(board.main_board):
                             self.selected_squares.append([6,0] if piece.color == 1 else [6,7])
                         if piece.long_castle_allowed(board.main_board):
                             self.selected_squares.append([2,0] if piece.color == 1 else [2,7])
+                    """
 
                     for i in legal_squares:
                         self.selected_squares.append(i)
@@ -84,12 +86,13 @@ class GUI(arcade.Window):
 
                         # formatted_move_notation = generate_move_text.standard_notation(piece.x, piece.y, coords[0], coords[1], piece, occupied)
                         formatted_move = move_coords.coords_to_move(piece.x, piece.y, coords[0], coords[1])
-
+                        """
                         if piece.__class__.__name__ == "King":
                             if piece.short_castle_allowed(board.main_board) and square[0] == 6 and square[1] == 0 if (piece.color == 1) else 7:
                                 formatted_move = "SHORT_CASTLE"
                             elif piece.long_castle_allowed(board.main_board) and square[0] == 2 and square[1] == 0 if (piece.color == 1) else 7:
                                 formatted_move = "LONG_CASTLE"
+                        """
 
                         board.main_board.move(formatted_move)
                         board.main_board.moves.append(formatted_move)
