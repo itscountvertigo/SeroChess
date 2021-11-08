@@ -34,10 +34,12 @@ class GUI(arcade.Window):
 
         # draw circles on the legal moves of a selected piece
         for each in self.selected_squares:
-            arcade.draw_circle_filled(each[0] * self.width / 8 + self.width / 16, 
-                                      each[1] * self.width / 8 + self.width / 16, 
-                                      self.width / 32,
-                                      [0, 0, 0, 30])
+            arcade.draw_circle_filled(
+                each[0] * self.width / 8 + self.width / 16, 
+                each[1] * self.width / 8 + self.width / 16, 
+                self.width / 32,
+                [0, 0, 0, 30]
+            )
 
     def on_mouse_press(self, x, y, button, modifiers):
         coords = coords_to_square(x, y, self.width)
@@ -135,16 +137,20 @@ class GUI(arcade.Window):
         for x in range(8):
             for y in range(8):
                 if x % 2 != y % 2:
-                    arcade.draw_rectangle_filled(x * square_width + square_width / 2, 
-                                                 y * square_height + square_height / 2, 
-                                                 square_width, 
-                                                 square_height, 
-                                                 self.color_b)
+                    arcade.draw_rectangle_filled(
+                        x * square_width + square_width / 2, 
+                        y * square_height + square_height / 2, 
+                        square_width, 
+                        square_height, 
+                        self.color_b
+                    )
     
     def draw_sprites(self, pieces):
         for each in pieces:
-            new_sprite = arcade.Sprite(each.sprite_path,
-                                       scale=1.2,
-                                       center_x=(each.x * self.width / 8 + self.width / 16), 
-                                       center_y=(each.y * self.height / 8 + self.width / 16))
+            new_sprite = arcade.Sprite(
+                each.sprite_path,
+                scale=1.2,
+                center_x=(each.x * self.width / 8 + self.width / 16), 
+                center_y=(each.y * self.height / 8 + self.width / 16)
+            )
             arcade.Sprite.draw(new_sprite)
