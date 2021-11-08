@@ -18,15 +18,16 @@ class King(pieces.Piece):
         self.in_starting_position = True
 
     def legal_moves(self, current_board):
-        legal_squares = [[self.x - 1, self.y - 1],  # bottom left
-                         [self.x - 1, self.y],      # left
-                         [self.x - 1, self.y + 1],  # top left
-                         [self.x, self.y - 1],      # down
-                         [self.x, self.y + 1],      # up
-                         [self.x + 1, self.y - 1],  # bottom right
-                         [self.x + 1, self.y],      # right
-                         [self.x + 1, self.y + 1]   # top right
-                         ]
+        legal_squares = [
+            [self.x - 1, self.y - 1],  # bottom left
+            [self.x - 1, self.y],      # left
+            [self.x - 1, self.y + 1],  # top left
+            [self.x, self.y - 1],      # down
+            [self.x, self.y + 1],      # up
+            [self.x + 1, self.y - 1],  # bottom right
+            [self.x + 1, self.y],      # right
+            [self.x + 1, self.y + 1]   # top right
+        ]
 
         remove_list = []
         for i in legal_squares:
@@ -43,11 +44,12 @@ class King(pieces.Piece):
         for each in legal_squares:
             legal_moves.append(move_coords.coords_to_move(self.x, self.y, each[0], each[1]))
             # legal_moves.append(chr(ord('`')+(self.x + 1)) + str(self.y + 1) + chr(ord('`')+(each[0] + 1)) + str(each[1] + 1))
-
+        """
         if self.short_castle_allowed(current_board):
             legal_moves.append("SHORT_CASTLE")
         if self.long_castle_allowed(current_board):
             legal_moves.append("LONG_CASTLE")
+        """
 
         return legal_moves
 
@@ -57,20 +59,13 @@ class King(pieces.Piece):
             return False
 
         for piece in current_board.pieces:
-            if self.color == 1:
-                if piece.__class__.__name__ == "Rook" and piece.color == self.color:
-                        if piece.x != 7 or piece.y != 0 or not piece.in_starting_position:
-                            return False
-                if (piece.x == 5 or piece.x == 6) and piece.y == 0:
-                    return False
+            
+            if (piece.x == 5 or piece.x == 6) and piece.y == 0 if self.color == 1 else 7:
+                return False
 
-            else:
-                if piece.__class__.__name__ == "Rook" and piece.color == self.color:
-                    if piece.x != 7 or piece.y != 7 or not piece.in_starting_position:
+            if piece.__class__.__name__ == "Rook" and piece.color == self.color:
+                    if piece.x != 7 or piece.y != (0 if self.color == 1 else 7) or not piece.in_starting_position:
                         return False
-
-                if (piece.x == 5 or piece.x == 6) and piece.y == 7:
-                    return False
 
             return True
 

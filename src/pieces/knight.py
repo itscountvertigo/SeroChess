@@ -17,11 +17,12 @@ class Knight(pieces.Piece):
             self.sprite_path = "assets/default_sprites/white/white_knight.png"
  
     def legal_moves(self, current_board):
-        legal_squares = [[self.x + 1, self.y + 2], [self.x - 1, self.y + 2],  # up 2, 1 left/right
-                         [self.x + 2, self.y + 1], [self.x - 2, self.y + 1],  # up 1, 2 left/right
-                         [self.x + 2, self.y - 1], [self.x - 2, self.y - 1],  # down 1, 2 left/right
-                         [self.x - 1, self.y - 2], [self.x + 1, self.y - 2]   # down 2, 1 left/right
-                         ]
+        legal_squares = [
+            [self.x + 1, self.y + 2], [self.x - 1, self.y + 2],  # up 2, 1 left/right
+            [self.x + 2, self.y + 1], [self.x - 2, self.y + 1],  # up 1, 2 left/right
+            [self.x + 2, self.y - 1], [self.x - 2, self.y - 1],  # down 1, 2 left/right
+            [self.x - 1, self.y - 2], [self.x + 1, self.y - 2]   # down 2, 1 left/right
+        ]
 
         remove_list = []
         for i in legal_squares:
