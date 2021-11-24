@@ -17,28 +17,26 @@ class Knight(pieces.Piece):
             self.sprite_path = "assets/default_sprites/white/white_knight.png"
  
     def legal_moves(self, current_board):
-        legal_squares = [
-            [self.x + 1, self.y + 2], [self.x - 1, self.y + 2],  # up 2, 1 left/right
-            [self.x + 2, self.y + 1], [self.x - 2, self.y + 1],  # up 1, 2 left/right
-            [self.x + 2, self.y - 1], [self.x - 2, self.y - 1],  # down 1, 2 left/right
-            [self.x - 1, self.y - 2], [self.x + 1, self.y - 2]   # down 2, 1 left/right
-        ]
+        legal_squares = []
 
-        remove_list = []
-        for i in legal_squares:
-            if i[0] < 0 or i[0] > 7 or i[1] < 0 or i[1] > 7:
-                remove_list.append(i)
-            for each in current_board.pieces:
-                if i[0] == each.x and i[1] == each.y and each.color == self.color:
-                    remove_list.append(i)
+        for x in range(-2,2):
+            if x == 0:
+                continue
+            y_diff = 1 if x % 2 == 0 else 2
+            if self.x + x >= 0 and self.x + x <= 7:
+                if self.y + y_diff >= 0 and self.y + y_diff <= 7:
+                    if self.check_occupied(self.x + x, self.y + y_diff, current_board) != 2:
+                        legal_squares.append([self.x + x, self.y + y_diff])
 
-        for x in remove_list:
-            legal_squares.remove(x)
+                if self.y - y_diff >= 0 and self.y - y_diff <= 7:
+                   if self.check_occupied(self.x + x, self.y - y_diff, current_board) != 2:
+                        legal_squares.append([self.x + x, self.y - y_diff])
+
+        # print(legal_squares)
 
         legal_moves = []
         for each in legal_squares:
             legal_moves.append(move_coords.coords_to_move(self.x, self.y, each[0], each[1]))
-            # legal_moves.append(chr(ord('`')+(self.x + 1)) + str(self.y + 1) + chr(ord('`')+(each[0] + 1)) + str(each[1] + 1))
 
         return legal_moves
 

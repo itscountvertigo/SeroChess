@@ -2,6 +2,7 @@ import arcade
 
 import board
 # import check
+import minimax
 
 from coords_to_square import coords_to_square
 
@@ -44,7 +45,7 @@ class GUI(arcade.Window):
     def on_mouse_press(self, x, y, button, modifiers):
         coords = coords_to_square(x, y, self.width)
 
-        # print(check.mate(board.main_board.pieces, board.main_board.who_to_move))
+        # print(minimax.minimax(board.main_board, board.main_board.who_to_move, depth=1))
 
         for piece in board.main_board.pieces:
             # if clicked square has a piece:

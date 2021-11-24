@@ -11,7 +11,7 @@ def minimax(current_board, who_to_move, depth):
     max_evaluation = 999 if who_to_move == 1 else -999
 
     for move in legal_moves_list.all_legal_moves(current_board, who_to_move):
-        new_board = copy.deepcopy(current_board)
+        new_board = board.Board(current_board.pieces, who_to_move, 1, 0, [])
         new_board.move(move)
         new_evaluation = minimax(new_board, not who_to_move, depth - 1)
 
