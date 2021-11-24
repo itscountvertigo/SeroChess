@@ -18,32 +18,23 @@ class King(pieces.Piece):
         self.in_starting_position = True
 
     def legal_moves(self, current_board):
-        legal_squares = [
-            [self.x - 1, self.y - 1],  # bottom left
-            [self.x - 1, self.y],      # left
-            [self.x - 1, self.y + 1],  # top left
-            [self.x, self.y - 1],      # down
-            [self.x, self.y + 1],      # up
-            [self.x + 1, self.y - 1],  # bottom right
-            [self.x + 1, self.y],      # right
-            [self.x + 1, self.y + 1]   # top right
-        ]
+        legal_squares = []
 
-        remove_list = []
-        for i in legal_squares:
-            if i[0] < 0 or i[0] > 7 or i[1] < 0 or i[1] > 7:
-                remove_list.append(i)
-            for each in current_board.pieces:
-                if i[0] == each.x and i[1] == each.y and each.color == self.color:
-                    remove_list.append(i)
+        for x in range(-1,1):
+            if self.x + x >= 0 and self.x + x <= 7:
+                if self.y - 1 >= 0 and self.y - 1 <= 7 and self.check_occupied(self.x + x, self.y - 1, current_board) != 2:
+                    legal_squares.append([self.x + x, self.y - 1])
 
-        for x in remove_list:
-            legal_squares.remove(x)
+                if self.y >= 0 and self.y <= 7 and self.check_occupied(self.x + x, self.y, current_board) != 2:
+                    legal_squares.append([self.x + x, self.y])
+
+                if self.y + 1 >= 0 and self.y + 1 <= 7 and self.check_occupied(self.x + x, self.y + 1, current_board) != 2:
+                    legal_squares.append([self.x + x, self.y + 1])
 
         legal_moves = []
         for each in legal_squares:
             legal_moves.append(move_coords.coords_to_move(self.x, self.y, each[0], each[1]))
-            # legal_moves.append(chr(ord('`')+(self.x + 1)) + str(self.y + 1) + chr(ord('`')+(each[0] + 1)) + str(each[1] + 1))
+
         """
         if self.short_castle_allowed(current_board):
             legal_moves.append("SHORT_CASTLE")
