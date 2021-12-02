@@ -1,5 +1,3 @@
-from pieces import king, queen, rook, knight, bishop, pawn
-
 import move_coords
 from fen_import import read_FEN
 
@@ -51,15 +49,26 @@ class Board():
         old_coords = coords[0]
         new_coords = coords[1]
 
+        removed_piece = None
+
         for piece in self.pieces:
+            if [piece.x, piece.y] == new_coords:
+                removed_piece = piece
+
             if [piece.x, piece.y] == old_coords:
                 piece.x = new_coords[0]
                 piece.y = new_coords[1]
 
-                break
+        if removed_piece:
+            self.pieces.remove(removed_piece)
         
-        if piece.color == 0:
+        if self.who_to_move == 0:
             self.move_num += 1
         self.ply += 1
+
+        self.who_to_move = not self.who_to_move
+
+    def check_square_occupied(x, y):
+        pass
 
 main_board = Board(read_FEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"), 1, 1, 0, [])

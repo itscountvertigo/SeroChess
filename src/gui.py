@@ -2,7 +2,8 @@ import arcade
 
 import board
 # import check
-import minimax
+from minimax import minimax
+# from cli import pos_to_cli_board
 
 from coords_to_square import coords_to_square
 
@@ -99,12 +100,6 @@ class GUI(arcade.Window):
 
                         board.main_board.move(formatted_move)
                         board.main_board.moves.append(formatted_move)
-
-                        # capturing
-                        if occupied == 1: # 1 means there is a piece and it can be captured
-                            for i in board.main_board.pieces:
-                                if coords[0] == i.x and coords[1] == i.y and i != piece:
-                                    board.main_board.pieces.remove(i)
                         
                         piece_type = piece.__class__.__name__
                         
@@ -120,19 +115,13 @@ class GUI(arcade.Window):
                                     elif i == piece.enemy_en_passant_right:
                                         board.main_board.pieces.remove(i)
 
-                        # change move num after black moves: one 'move' in chess means one move (ply) by each player
-                        if piece.color == 0:
-                            board.main_board.move_num += 1
-                        board.main_board.ply += 1
-
                         print(evaluate(board.main_board))
-
-                        # switch whose turn it is
-                        board.main_board.who_to_move = not board.main_board.who_to_move
                         
                         self.selected_squares = []
                         for i in board.main_board.pieces:
                             i.selecting_squares = False
+    
+        # print(pos_to_cli_board(board.main_board))
 
     def draw_squares(self, square_width, square_height):
         for x in range(8):

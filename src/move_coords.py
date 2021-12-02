@@ -1,5 +1,3 @@
-import board
-
 def move_to_coords(move):
     if move == "SHORT_CASTLE" or move == "LONG_CASTLE":
         return [None, move]
@@ -15,11 +13,11 @@ def move_to_coords(move):
 def coords_to_move(old_x, old_y, x, y):
     return chr(ord('`')+(old_x + 1)) + str(old_y + 1) + chr(ord('`')+(x + 1)) + str(y + 1)
 
-def coords_to_notation(old_x, old_y, new_x, new_y, piece, occupied):
+def coords_to_notation(old_x, old_y, new_x, new_y, piece, occupied, current_board):
     # This is a function that generates move text in the classic/standard chess notation.
     # This should not be used in the main list of moves.
 
-    move_num_txt = str(board.move_num) + "." if piece.color == 1 else str(board.move_num) + "..."
+    move_num_txt = str(current_board.move_num) + "." if piece.color == 1 else str(current_board.move_num) + "..."
     piece_char = piece.piece_character
     
     capture_char = ''

@@ -1,4 +1,4 @@
-import minimax
+from minimax import minimax
 import random
 import board
 from legal_moves_list import all_legal_moves
@@ -8,10 +8,17 @@ def player_vs_computer(player=1):
         # if computers move, find best move
         if board.main_board.who_to_move != player:
             # find best legal moves (call to minimax giving current pos)
+            
+            """
             legal_moves = all_legal_moves(board.main_board, not player)
             computer_move = legal_moves[random.randint(0, len(legal_moves) - 1)]
             print("Computer: " + computer_move)
             board.main_board.move(computer_move)
+            """
+
+            computer_move = minimax(board.main_board, board.main_board.who_to_move, depth=2)
+            print("Computer: " + computer_move[1])
+            board.main_board.move(computer_move[1])
 
         # if players move, await input and process it
         else:
@@ -22,15 +29,9 @@ def player_vs_computer(player=1):
                     board.main_board.move(player_move)
                     legal_move_found = True
 
-        print("Minimax Eval: " + minimax.minimax(board.main_board, board.main_board.who_to_move, depth=2) + "\n")
+        # print("Minimax Eval: " + str(minimax.minimax(board.main_board, board.main_board.who_to_move, depth=2)) + "\n")
 
         print("\nPosition: \n" + pos_to_cli_board(board.main_board))
-
-        if board.main_board.who_to_move == 0:
-            board.main_board.move_num += 1
-        board.main_board.ply += 1
-
-        board.main_board.who_to_move = not board.main_board.who_to_move
         
 def input_move(player):
     player_move = input("Player: ")
