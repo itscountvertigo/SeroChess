@@ -30,7 +30,7 @@ class Bishop(pieces.Piece):
             if point_x > 7 or point_y > 7:
                 break
 
-            occupied = self.check_occupied(point_x, point_y, current_board)
+            occupied = current_board.check_square_occupied(point_x, point_y, self.color)
 
             if occupied == 2:
                 break
@@ -51,7 +51,7 @@ class Bishop(pieces.Piece):
             if point_x > 7 or point_y > 7:
                 break
 
-            occupied = self.check_occupied(point_x, point_y, current_board)
+            occupied = current_board.check_square_occupied(point_x, point_y, self.color)
 
             if occupied == 2:
                 break
@@ -72,7 +72,7 @@ class Bishop(pieces.Piece):
             if point_x > 7 or point_y > 7:
                 break
 
-            occupied = self.check_occupied(point_x, point_y, current_board)
+            occupied = current_board.check_square_occupied(point_x, point_y, self.color)
 
             if occupied == 2:
                 break
@@ -93,7 +93,7 @@ class Bishop(pieces.Piece):
             if point_x > 7 or point_y > 7:
                 break
 
-            occupied = self.check_occupied(point_x, point_y, current_board)
+            occupied = current_board.check_square_occupied(point_x, point_y, self.color)
 
             if occupied == 2:
                 break

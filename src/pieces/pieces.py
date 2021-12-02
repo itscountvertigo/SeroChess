@@ -9,32 +9,6 @@ class Piece:
 
         self.selecting_squares = False
 
-    def check_occupied(self, x, y, current_board):
-        capturing_piece = False
-        blocked_by_own_piece = False
-
-        for each in current_board.pieces:
-                if each.x == x and each.y == y:
-                    if each.color == self.color:
-                        capturing_piece = False
-                        blocked_by_own_piece = True
-                    else:
-                        capturing_piece = True
-                        blocked_by_own_piece = False
-
-                    break
-                else:
-                    capturing_piece = False
-                    blocked_by_own_piece = False
-
-        # return values of the square. 0: square is free, 1: capturing, 2: blocked
-        if capturing_piece:
-            return 1
-        elif blocked_by_own_piece:
-            return 2
-        else:
-            return 0
-
     def get_x(self):
         return self.x
 

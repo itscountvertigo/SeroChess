@@ -68,7 +68,50 @@ class Board():
 
         self.who_to_move = not self.who_to_move
 
-    def check_square_occupied(x, y):
-        pass
+    def check_square_occupied(self, x, y, color):
+        """
+        Returns a value of 0, 1 or 2 depending on wether it's: 
+        - 0: completely free
+        - 1: occupied by an opponent piece (capture)
+        - 2: occupied by a friendly piece (blocked)
+        """
+
+        for each in self.pieces:
+            if each.x == x and each.y == y:
+                if each.color == color:
+                    # A friendly piece blocks the square
+                    return 2
+                else:
+                    # An enemy piece occupies the square (it can be captured)
+                    return 1
+        
+        # There aren't any pieces on the square
+        return 0
+                    
+
+        """
+
+        for each in self.pieces:
+                if each.x == x and each.y == y:
+                    if each.color == self.color:
+                        capturing_piece = False
+                        blocked_by_own_piece = True
+                    else:
+                        capturing_piece = True
+                        blocked_by_own_piece = False
+
+                    break
+                else:
+                    capturing_piece = False
+                    blocked_by_own_piece = False
+
+        # return values of the square. 0: square is free, 1: capturing, 2: blocked
+        if capturing_piece:
+            return 1
+        elif blocked_by_own_piece:
+            return 2
+        else:
+            return 0
+        """
 
 main_board = Board(read_FEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"), 1, 1, 0, [])

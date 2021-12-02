@@ -25,11 +25,11 @@ class Knight(pieces.Piece):
             y_diff = 1 if x % 2 == 0 else 2
             if self.x + x >= 0 and self.x + x <= 7:
                 if self.y + y_diff >= 0 and self.y + y_diff <= 7:
-                    if self.check_occupied(self.x + x, self.y + y_diff, current_board) != 2:
+                    if current_board.check_square_occupied(self.x + x, self.y + y_diff, self.color) != 2:
                         legal_squares.append([self.x + x, self.y + y_diff])
 
                 if self.y - y_diff >= 0 and self.y - y_diff <= 7:
-                   if self.check_occupied(self.x + x, self.y - y_diff, current_board) != 2:
+                   if current_board.check_square_occupied(self.x + x, self.y - y_diff, self.color) != 2:
                         legal_squares.append([self.x + x, self.y - y_diff])
 
         # print(legal_squares)

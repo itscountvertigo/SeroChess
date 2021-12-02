@@ -45,6 +45,8 @@ class GUI(arcade.Window):
 
     def on_mouse_press(self, x, y, button, modifiers):
         coords = coords_to_square(x, y, self.width)
+        
+        print(board.main_board.check_square_occupied(coords[0], coords[1], board.main_board.who_to_move))
 
         # print(minimax.minimax(board.main_board, board.main_board.who_to_move, depth=1))
 
@@ -86,7 +88,7 @@ class GUI(arcade.Window):
                 # if clicked square is one of a piece's selected and legal moves
                 for square in self.selected_squares:
                     if coords[0] == square[0] and coords[1] == square[1] and piece.selecting_squares:
-                        occupied = piece.check_occupied(coords[0], coords[1], board.main_board)
+                        occupied = board.main_board.check_square_occupied(coords[0], coords[1], board.main_board.who_to_move)
 
                         # formatted_move_notation = generate_move_text.standard_notation(piece.x, piece.y, coords[0], coords[1], piece, occupied)
                         formatted_move = move_coords.coords_to_move(piece.x, piece.y, coords[0], coords[1])

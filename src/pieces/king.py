@@ -22,13 +22,13 @@ class King(pieces.Piece):
 
         for x in range(-1,1):
             if self.x + x >= 0 and self.x + x <= 7:
-                if self.y - 1 >= 0 and self.y - 1 <= 7 and self.check_occupied(self.x + x, self.y - 1, current_board) != 2:
+                if self.y - 1 >= 0 and self.y - 1 <= 7 and current_board.check_square_occupied(self.x + x, self.y - 1, self.color) != 2:
                     legal_squares.append([self.x + x, self.y - 1])
 
-                if self.y >= 0 and self.y <= 7 and self.check_occupied(self.x + x, self.y, current_board) != 2:
+                if self.y >= 0 and self.y <= 7 and current_board.check_square_occupied(self.x + x, self.y, self.color) != 2:
                     legal_squares.append([self.x + x, self.y])
 
-                if self.y + 1 >= 0 and self.y + 1 <= 7 and self.check_occupied(self.x + x, self.y + 1, current_board) != 2:
+                if self.y + 1 >= 0 and self.y + 1 <= 7 and current_board.check_square_occupied(self.x + x, self.y + 1, self.color) != 2:
                     legal_squares.append([self.x + x, self.y + 1])
 
         legal_moves = []
