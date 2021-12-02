@@ -19,7 +19,7 @@ class Knight(pieces.Piece):
     def legal_moves(self, current_board):
         legal_squares = []
 
-        for x in range(-2,2):
+        for x in range(-2,3): # 3 is used here because range(-2,2) returns [-2, -1, 0, 1]. one is added to the upper bound to correct for this.
             if x == 0:
                 continue
             y_diff = 1 if x % 2 == 0 else 2
