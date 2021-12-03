@@ -20,7 +20,7 @@ class King(pieces.Piece):
     def legal_moves(self, current_board):
         legal_squares = []
 
-        for x in range(-1,1):
+        for x in range(-1,2): # range(-1, 1) returns [-1, 0], not [-1, 0, 1], so we add one to the upper bound
             if self.x + x >= 0 and self.x + x <= 7:
                 if self.y - 1 >= 0 and self.y - 1 <= 7 and current_board.check_square_occupied(self.x + x, self.y - 1, self.color) != 2:
                     legal_squares.append([self.x + x, self.y - 1])
