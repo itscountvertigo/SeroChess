@@ -103,20 +103,6 @@ class GUI(arcade.Window):
                         board.main_board.move(formatted_move)
                         board.main_board.moves.append(formatted_move)
                         
-                        piece_type = piece.__class__.__name__
-                        
-                        # making in_starting_position (check for en passant / castling) false
-                        if piece_type == "Pawn" or piece_type == "King" or piece_type == "Rook":
-                            piece.in_starting_position = False
-
-                            # en passant capturing
-                            if piece_type == 'Pawn':
-                                for i in board.main_board.pieces:
-                                    if i == piece.enemy_en_passant_left:
-                                        board.main_board.pieces.remove(i)
-                                    elif i == piece.enemy_en_passant_right:
-                                        board.main_board.pieces.remove(i)
-
                         print(evaluate(board.main_board))
                         
                         self.selected_squares = []

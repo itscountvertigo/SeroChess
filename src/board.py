@@ -56,6 +56,20 @@ class Board():
                 removed_piece = piece
 
             if [piece.x, piece.y] == old_coords:
+                piece_type = piece.__class__.__name__
+                        
+                # making in_starting_position (check for en passant / castling) false
+                if piece_type == "Pawn" or piece_type == "King" or piece_type == "Rook":
+                    piece.in_starting_position = False
+                    # en passant capturing
+                    if piece_type == 'Pawn':
+                        for i in self.pieces:
+                            if i == piece.enemy_en_passant_left:
+                                self.pieces.remove(i)
+                            elif i == piece.enemy_en_passant_right:
+                                self.pieces.remove(i)
+
+                # Move the piece
                 piece.x = new_coords[0]
                 piece.y = new_coords[1]
 
