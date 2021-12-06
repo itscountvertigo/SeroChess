@@ -62,7 +62,7 @@ class Board():
                 if piece_type == "Pawn" or piece_type == "King" or piece_type == "Rook":
                     piece.in_starting_position = False
                     # en passant capturing
-                    if piece_type == 'Pawn':
+                    if piece_type == 'Pawn' and (piece.x == 3 or piece.x == 4):
                         for i in self.pieces:
                             if i == piece.enemy_en_passant_left:
                                 self.pieces.remove(i)
