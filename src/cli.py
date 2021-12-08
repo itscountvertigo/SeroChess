@@ -1,5 +1,6 @@
+import time
+
 from minimax import minimax
-import random
 import board
 from legal_moves_list import all_legal_moves
 
@@ -15,9 +16,10 @@ def player_vs_computer(player=1):
             print("Computer: " + computer_move)
             board.main_board.move(computer_move)
             """
-
-            computer_move = minimax(board.main_board, board.main_board.who_to_move, depth=2)
-            print("Computer: " + computer_move[1])
+            start_time = time.perf_counter()
+            computer_move = minimax(board.main_board, board.main_board.who_to_move, depth=3)
+            end_time = time.perf_counter()
+            print(f"Computer: {computer_move[1]}, calculated in {end_time - start_time} seconds")
             board.main_board.move(computer_move[1])
 
         # if players move, await input and process it
