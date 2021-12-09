@@ -17,7 +17,7 @@ def player_vs_computer(player=1):
             board.main_board.move(computer_move)
             """
             start_time = time.perf_counter()
-            computer_move = minimax(board.main_board, board.main_board.who_to_move, depth=3)
+            computer_move = minimax(board.main_board, board.main_board.who_to_move, (-9999, None), (9999, None), depth=4)
             end_time = time.perf_counter()
             print(f"Computer: {computer_move[1]}, calculated in {end_time - start_time} seconds")
             board.main_board.move(computer_move[1])
