@@ -4,34 +4,23 @@ from minimax import minimax
 import board
 from legal_moves_list import all_legal_moves
 
-def player_vs_computer(player=1):
+def player_vs_computer(player_w, player_b, depth):
     while True:
-        # if computers move, find best move
-        if board.main_board.who_to_move != player:
-            # find best legal moves (call to minimax giving current pos)
-            
-            """
-            legal_moves = all_legal_moves(board.main_board, not player)
-            computer_move = legal_moves[random.randint(0, len(legal_moves) - 1)]
-            print("Computer: " + computer_move)
-            board.main_board.move(computer_move)
-            """
+        if (board.main_board.who_to_move == 1 and player_w == 'computer') or (board.main_board.who_to_move == 0 and player_b == 'computer'):
             start_time = time.perf_counter()
-            computer_move = minimax(board.main_board, board.main_board.who_to_move, (-9999, None), (9999, None), depth=4)
+            computer_move = minimax(board.main_board, board.main_board.who_to_move, (-9999, None), (9999, None), depth)
             end_time = time.perf_counter()
+
             print(f"Computer: {computer_move[1]}, calculated in {end_time - start_time} seconds")
             board.main_board.move(computer_move[1])
 
-        # if players move, await input and process it
         else:
             legal_move_found = False
             while legal_move_found == False:
-                player_move = input_move(player)
+                player_move = input_move(board.main_board.who_to_move)
                 if player_move != None:
                     board.main_board.move(player_move)
                     legal_move_found = True
-
-        # print("Minimax Eval: " + str(minimax.minimax(board.main_board, board.main_board.who_to_move, depth=2)) + "\n")
 
         print("\nPosition: \n" + pos_to_cli_board(board.main_board))
         
