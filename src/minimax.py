@@ -20,12 +20,9 @@ def minimax(current_board, who_to_move, alpha, beta, depth):
             evaluation = evaluation if evaluation[0] >= minimax_result[0] else (minimax_result[0], move)
 
             if evaluation[0] >= beta[0]:
-                print(f"BREAK! eval={evaluation}, beta={beta}, white to move")
                 break
 
             alpha = alpha if alpha[0] >= evaluation[0] else evaluation
-
-        print(f"depth={depth}, eval={evaluation}")
 
         return evaluation
 
@@ -42,7 +39,6 @@ def minimax(current_board, who_to_move, alpha, beta, depth):
             # evaluation = min(evaluation, minimax(new_board, not who_to_move, alpha, beta, depth - 1))
 
             if evaluation[0] <= alpha[0]:
-                print(f"BREAK! eval={evaluation}, alpha={alpha}, black to move")
                 break
 
             beta = beta if beta[0] <= evaluation[0] else evaluation
