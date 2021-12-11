@@ -1,6 +1,11 @@
 white = [[0 for _1 in range(8)] for _ in range(8)]
 black = [[0 for _1 in range(8)] for _ in range(8)]
 
+for y in range(8):
+    for x in range(8):
+        white[y][x] = 1/18 * (y - 1) ** 2
+        black[y][x] = 1/18 * (y - 6) ** 2
+
 """
 import matplotlib.pyplot as plt
 
