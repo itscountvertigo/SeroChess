@@ -75,6 +75,8 @@ class Board():
 
         if removed_piece:
             self.pieces.remove(removed_piece)
+
+        self.moves.append(move)
         
         if self.who_to_move == 0:
             self.move_num += 1

@@ -1,13 +1,40 @@
+from copy import deepcopy
+import random
+
 import evaluate
 from legal_moves_list import all_legal_moves
 
-from copy import deepcopy
+openings = []
+
+with open('src/openings/e4_openings.txt', 'r') as e4_openings:
+    for line in e4_openings.readlines():
+        l = line.strip().split(' ')
+        openings.append(l)
+
+with open('src/openings/d4_openings.txt', 'r') as d4_openings:
+    for line in d4_openings.readlines():
+        l = line.strip().split(' ')
+        openings.append(l)
 
 def minimax(current_board, who_to_move, alpha, beta, depth):
-    if all_legal_moves(current_board, who_to_move) == []: return (0, None)
-    if depth == 0 or all_legal_moves(current_board, who_to_move) == []:
-        # print(evaluate.evaluate(current_board))
+
+    if all_legal_moves(current_board, who_to_move) == []: 
+        return (0, None)
+    
+    if depth == 0:
         return (evaluate.evaluate(current_board), None)
+
+    # Removes irrelevant openings (of positions that have not occured in this game)
+    for idx, move in enumerate(current_board.moves):
+        for opening in openings:
+            if len(opening) < current_board.ply:
+                openings.remove(opening)
+            if opening[idx] != move:
+                openings.remove(opening)
+
+    # if there are still relevant openings, play one of the moves
+    if openings != []:
+        return (None, openings[random.randint(0, len(openings)) - 1][current_board.ply])
 
     if who_to_move == 1:
         evaluation = (-999, None)
@@ -44,19 +71,3 @@ def minimax(current_board, who_to_move, alpha, beta, depth):
             beta = beta if beta[0] <= evaluation[0] else evaluation
 
         return evaluation
-
-"""
-    max_evaluation = (-999, None) if who_to_move == 1 else (999, None)
-
-    for move in legal_moves_list.all_legal_moves(current_board, who_to_move):
-        new_board = deepcopy(current_board)
-        new_board.move(move)
-        new_evaluation = minimax(new_board, not who_to_move, depth - 1)
-
-        if (who_to_move == 1 and new_evaluation[0] > max_evaluation[0]) or (who_to_move == 0 and new_evaluation[0] < max_evaluation[0]):
-            best_move = move
-
-        max_evaluation = (max(max_evaluation[0], new_evaluation[0]), 0) if who_to_move == 1 else (min(max_evaluation[0], new_evaluation[0]), 0)
-    
-    return (max_evaluation[0], best_move)
-"""
