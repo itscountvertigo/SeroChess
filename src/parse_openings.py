@@ -1,14 +1,21 @@
 def parse_openings():
     openings = []
 
-    with open('src/openings/e4_openings.txt', 'r') as e4_openings:
-        for line in e4_openings.readlines():
-            l = line.strip().split(' ')
-            openings.append(l)
-
-    with open('src/openings/d4_openings.txt', 'r') as d4_openings:
-        for line in d4_openings.readlines():
-            l = line.strip().split(' ')
-            openings.append(l)
+    openings += parse_opening_file('src/openings/e4_openings.txt')
+    openings += parse_opening_file('src/openings/d4_openings.txt')
 
     return openings
+
+def parse_opening_file(file_location):
+    openings_list = []
+    with open(file_location, 'r') as file:
+        for line in file.readlines():
+            l = line.strip().split(' ')
+
+            for idx, i in enumerate(l):
+                if i.startswith('//'):
+                    l.pop(idx)
+
+            openings_list.append(l)
+
+    return openings_list
