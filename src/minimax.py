@@ -4,17 +4,8 @@ import random
 import evaluate
 from legal_moves_list import all_legal_moves
 
-openings = []
-
-with open('src/openings/e4_openings.txt', 'r') as e4_openings:
-    for line in e4_openings.readlines():
-        l = line.strip().split(' ')
-        openings.append(l)
-
-with open('src/openings/d4_openings.txt', 'r') as d4_openings:
-    for line in d4_openings.readlines():
-        l = line.strip().split(' ')
-        openings.append(l)
+from parse_openings import parse_openings
+openings = parse_openings()
 
 def minimax(current_board, who_to_move, alpha, beta, depth):
 
@@ -26,11 +17,12 @@ def minimax(current_board, who_to_move, alpha, beta, depth):
 
     # Removes irrelevant openings (of positions that have not occured in this game)
     for idx, move in enumerate(current_board.moves):
-        for opening in openings:
+        for idx, opening in enumerate(openings):
             if len(opening) < current_board.ply:
-                openings.remove(opening)
+                openings.pop(idx)
+                continue
             if opening[idx] != move:
-                openings.remove(opening)
+                openings.pop(idx)
 
     # if there are still relevant openings, play one of the moves
     if openings != []:
