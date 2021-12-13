@@ -1,2 +1,17 @@
-e2e4 e7e5
-e2e4 d7d5
+//kings_pawn_e4_e5
+    e2e4 e7e5
+
+//sicilian_defence
+    //modern_variations
+        e2e4 c7c5 g1f3 d7d6 a7a6 //stockfish_move
+        e2e4 c7c5 g1f3 d7d6 g8f6 //most_common_move_lichess
+
+    //sicilian_defence_closed
+        e2e4 c7c5 b1c3 d7d6
+
+        //traditional
+            e2e4 c7c5 b1c3 b8c6 g2g3 //fianchetto
+            e2e4 c7c5 b1c3 b8c6 g1e2 //chameleon
+
+//scandiavian
+    e2e4 d7d5

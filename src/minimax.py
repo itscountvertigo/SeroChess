@@ -15,17 +15,18 @@ def minimax(current_board, who_to_move, alpha, beta, depth):
     if depth == 0:
         return (evaluate.evaluate(current_board), None)
 
-    # Removes irrelevant openings (of positions that have not occured in this game)
-    for idx, move in enumerate(current_board.moves):
-        for idx2, opening in enumerate(openings):
-            if len(opening) < current_board.ply:
-                openings.pop(idx2)
-                continue
-            if opening[idx] != move:
-                openings.pop(idx2)
+    if openings != []:
+        # Removes irrelevant openings (of positions that have not occured in this game)
+        for idx, move in enumerate(current_board.moves):
+            for idx2, opening in enumerate(openings):
+                if len(opening) <= current_board.ply:
+                    openings.pop(idx2)
+                    continue
+                if opening[idx] != move:
+                    openings.pop(idx2)
 
     # if there are still relevant openings, play one of the moves
-    if openings != []:
+    if openings != []: # This is checked again because the openings array is changed above
         return (None, openings[random.randint(0, len(openings)) - 1][current_board.ply])
 
     if who_to_move == 1:

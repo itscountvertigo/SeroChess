@@ -1,0 +1,9 @@
+//queens_pawn
+    d2d4 d7d5
+
+//queens_gambit_declined
+    d2d4 d7d5 c2c4 e7e6 b1c3 c8f6 //normal_defence
+    d2d4 d7d5 c2c4 e7e6 b1c3 c7c6 //semi_slav
+
+    //g1f3_variations
+    d2d4 d7d5 c2c4 e7e6 g1f3 g8f6
