@@ -9,4 +9,4 @@
     d2d4 d7d5 c2c4 e7e6 g1f3 g8f6
 
 //boris_opening
-    a2a3
+    a2a3 h7h6
