@@ -13,9 +13,10 @@ def parse_opening_file(file_location):
             l = line.strip().split(' ')
 
             for idx, i in enumerate(l):
-                if i.startswith('//'):
+                if i.startswith('//') or i == '':
                     l.pop(idx)
 
-            openings_list.append(l)
+            if l != []:
+                openings_list.append(l)
 
     return openings_list
