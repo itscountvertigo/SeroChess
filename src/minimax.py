@@ -8,9 +8,8 @@ from parse_openings import parse_openings
 openings = parse_openings()
 
 def minimax(current_board, who_to_move, alpha, beta, depth):
-    if all_legal_moves(current_board, who_to_move) == []: 
-        return (0, None)
-    
+    legal_moves_list = all_legal_moves(current_board, who_to_move)
+
     if depth == 0:
         return (evaluate.evaluate(current_board), None)
 
@@ -37,7 +36,7 @@ def minimax(current_board, who_to_move, alpha, beta, depth):
     if who_to_move == 1:
         evaluation = (-999, None)
 
-        for move in all_legal_moves(current_board, who_to_move):
+        for move in legal_moves_list:
             new_board = deepcopy(current_board)
             new_board.move(move)
             
@@ -63,7 +62,7 @@ def minimax(current_board, who_to_move, alpha, beta, depth):
     else:
         evaluation = (999, None)
 
-        for move in all_legal_moves(current_board, who_to_move):
+        for move in legal_moves_list:
             new_board = deepcopy(current_board)
             new_board.move(move)
 

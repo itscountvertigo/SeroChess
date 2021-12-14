@@ -1,17 +1,11 @@
 def move_to_coords(move):
     if move == "SHORT_CASTLE" or move == "LONG_CASTLE":
-        return [None, move]
+        return (None, move)
 
-    old_x = ord(move[0]) - 97
-    old_y = int(move[1]) - 1
-    
-    new_x = ord(move[2]) - 97
-    new_y = int(move[3]) - 1
-
-    return [[old_x, old_y], [new_x, new_y]]
+    return [(ord(move[0]) - 97, int(move[1]) - 1), (ord(move[2]) - 97, int(move[3]) - 1)]
 
 def coords_to_move(old_x, old_y, x, y):
-    return chr(ord('`')+(old_x + 1)) + str(old_y + 1) + chr(ord('`')+(x + 1)) + str(y + 1)
+    return chr(ord('`') + (old_x + 1)) + str(old_y + 1) + chr(ord('`') + (x + 1)) + str(y + 1)
 
 def coords_to_notation(old_x, old_y, new_x, new_y, piece, occupied, current_board):
     # This is a function that generates move text in the classic/standard chess notation.

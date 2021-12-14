@@ -52,10 +52,10 @@ class Board():
         removed_piece = None
 
         for piece in self.pieces:
-            if [piece.x, piece.y] == new_coords:
+            if (piece.x, piece.y) == new_coords:
                 removed_piece = piece
 
-            if [piece.x, piece.y] == old_coords:
+            if (piece.x, piece.y) == old_coords:
                 piece_type = piece.__class__.__name__
                         
                 # making in_starting_position (check for en passant / castling) false
@@ -103,31 +103,5 @@ class Board():
         
         # There aren't any pieces on the square
         return 0
-                    
-
-        """
-
-        for each in self.pieces:
-                if each.x == x and each.y == y:
-                    if each.color == self.color:
-                        capturing_piece = False
-                        blocked_by_own_piece = True
-                    else:
-                        capturing_piece = True
-                        blocked_by_own_piece = False
-
-                    break
-                else:
-                    capturing_piece = False
-                    blocked_by_own_piece = False
-
-        # return values of the square. 0: square is free, 1: capturing, 2: blocked
-        if capturing_piece:
-            return 1
-        elif blocked_by_own_piece:
-            return 2
-        else:
-            return 0
-        """
 
 main_board = Board(read_FEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"), 1, 1, 0, [])
