@@ -8,5 +8,6 @@
     //g1f3_variations
     d2d4 d7d5 c2c4 e7e6 g1f3 g8f6
 
-//boris_opening
-    a2a3 h7h6
+//indian_defense
+    d2d4 g8f6 c2c4 e7e6 g1f3 b7b6 g2g3 c8a6 //queens_indian_defence 
+    d2d4 g8f6 c2c4 e7e6 g1f3 
