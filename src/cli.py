@@ -1,4 +1,5 @@
 import time
+import rich
 
 from minimax import minimax
 import board
@@ -11,7 +12,7 @@ def player_vs_computer(player_w, player_b, depth):
             computer_move = minimax(board.main_board, board.main_board.who_to_move, (-9999, None), (9999, None), depth)
             end_time = time.perf_counter()
 
-            print(f"Computer: {computer_move[1]}, calculated in {end_time - start_time} seconds")
+            print(f"Computer: {computer_move[1]}, calculated in {end_time - start_time} seconds. Evaluation = {computer_move[0]}")
             board.main_board.move(computer_move[1])
 
         else:
@@ -22,7 +23,8 @@ def player_vs_computer(player_w, player_b, depth):
                     board.main_board.move(player_move)
                     legal_move_found = True
 
-        print("\nPosition: \n" + pos_to_cli_board(board.main_board))
+        rich.print(f"\nPosition: \n{pos_to_cli_board(board.main_board)} \n")
+        
         
 def input_move(player):
     player_move = input("Player: ")
@@ -49,16 +51,21 @@ def pos_to_cli_board(board):
         "white pawn": "♟︎"
     }
 
-    board_visualisation = [[0] * 8 for _ in range(8)]
-
-    for piece in board.pieces:
-        char = unicode_pieces[f"{'black' if piece.color == 0 else 'white'} {piece.__class__.__name__.lower()}"]
-        board_visualisation[piece.y][piece.x] = char
-
     final_text = ""
-    for rank in reversed(board_visualisation):
-        for square in rank:
-            final_text += "  " if square == 0 else str(square) + " "
-        final_text += "\n"
+
+    for y in reversed(range(8)):
+        for x in range(8):
+            bg_color = f"{'#f0d9b5' if (x + y) % 2 else '#b58863'}"
+            broken_off = False
+            for piece in board.pieces:
+                if piece.x == x and piece.y == y:
+                    char = unicode_pieces[f"white {piece.__class__.__name__.lower()}"]
+                    piece_color = 'red' if piece.color == 1 else 'blue'
+                    final_text += f"[{piece_color} on {bg_color}] {char} [/{piece_color} on {bg_color}]"
+                    broken_off = True
+                    break
+            if not broken_off:
+                final_text += f"[white on {bg_color}]   [/white on {bg_color}]"
+        final_text += '\n'
 
     return final_text
