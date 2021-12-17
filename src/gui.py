@@ -1,9 +1,7 @@
 import arcade
 
 import board
-# import check
 from minimax import minimax
-# from cli import pos_to_cli_board
 
 from coords_to_square import coords_to_square
 

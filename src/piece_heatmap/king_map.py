@@ -12,7 +12,7 @@ for y in range(8):
 
         # creates two peaks at the b and g files, since the exact corner is less favorable
         sin_amplitude = 5 # lower is steeper
-        files_sin = 1/sin_amplitude * sin(x * pi/2.5 + 0.1 * pi) + (sin_amplitude - 1)/sin_amplitude
+        files_sin = sin(x * pi/2.5 + 0.1 * pi) / sin_amplitude + (sin_amplitude - 1) / sin_amplitude
 
         # only use the formula with b/g peaks on the starting file for each color
         if y == 0:
