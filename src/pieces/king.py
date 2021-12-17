@@ -35,16 +35,12 @@ class King(pieces.Piece):
         for each in legal_squares:
             legal_moves.append(move_coords.coords_to_move(self.x, self.y, each[0], each[1]))
 
-        """
-        if self.short_castle_allowed(current_board):
-            legal_moves.append("SHORT_CASTLE")
-        if self.long_castle_allowed(current_board):
-            legal_moves.append("LONG_CASTLE")
-        """
-
         return legal_moves
 
     def short_castle_allowed(self, current_board):
+        """
+        Currently unused, since castling isn't implemented
+        """
         if not self.in_starting_position:
             # if king has moved, castling isnt allowed at all
             return False
@@ -61,6 +57,9 @@ class King(pieces.Piece):
             return True
 
     def long_castle_allowed(self, current_board):
+        """
+        Currently unused, since castling isn't implemented
+        """
         if not self.in_starting_position:
             # if king has moved, castling isnt allowed at all
             return False
