@@ -17,15 +17,16 @@ def minimax(current_board, who_to_move, alpha, beta, depth):
 
     if openings != []:
         new_openings = []
-        for opening in openings:
-            if len(opening) <= current_board.ply:
-                continue
-            for ply, move in enumerate(current_board.moves):
-                if opening[ply] != move:
-                    break
-                new_openings.append(opening)
-        
-        openings = new_openings 
+        if current_board.moves != []:
+            for opening in openings:
+                if len(opening) <= current_board.ply:
+                    continue
+                for ply, move in enumerate(current_board.moves):
+                    if opening[ply] != move:
+                        break
+                    new_openings.append(opening)
+
+            openings = new_openings 
 
     # if there are still relevant openings, play one of the moves
     if openings != []:
