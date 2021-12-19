@@ -15,6 +15,6 @@
 //universal
     d2d4 d7d6 g1f3 
 
-//dutch defence 
+//dutch_defence 
     d2d4 f7f5 g2g3 
     d2d4 f7f5 g2g3 g8f6 //dutch
