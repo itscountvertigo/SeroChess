@@ -51,16 +51,15 @@ class Board():
             self.pieces.remove(removed_piece)
 
         if old_promotion_pawn:
-            print(move)
             self.pieces.remove(old_promotion_pawn)
             if move[4] == 'N':
                 self.pieces.append(knight.Knight(new_coords[0], new_coords[1], piece.color))
             elif move[4] == 'B':
-                self.pieces.append(knight.Knight(new_coords[0], new_coords[1], piece.color))
+                self.pieces.append(bishop.Bishop(new_coords[0], new_coords[1], piece.color))
             elif move[4] == 'R':
-                self.pieces.append(knight.Knight(new_coords[0], new_coords[1], piece.color))
+                self.pieces.append(rook.Rook(new_coords[0], new_coords[1], piece.color))
             elif move[4] == 'Q':
-                self.pieces.append(knight.Knight(new_coords[0], new_coords[1], piece.color))
+                self.pieces.append(queen.Queen(new_coords[0], new_coords[1], piece.color))
 
         self.moves.append(move)
         
