@@ -6,19 +6,26 @@ import board
 from legal_moves_list import all_legal_moves
 
 def player_vs_computer(player_w, player_b, depth):
+    current_depth = depth
     while True:
         if (board.main_board.who_to_move == 1 and player_w == 'computer') or (board.main_board.who_to_move == 0 and player_b == 'computer'):
             start_time = time.perf_counter()
-            computer_move = minimax(board.main_board, board.main_board.who_to_move, (-9999, None), (9999, None), depth)
+            computer_move = minimax(board.main_board, board.main_board.who_to_move, (-9999, None), (9999, None), current_depth)
             end_time = time.perf_counter()
 
-            print(f"Computer: {computer_move[1]}, calculated in {end_time - start_time} seconds. Evaluation = {computer_move[0]}")
+            print(f"Computer: {computer_move[1]}, calculated in {end_time - start_time} seconds. Evaluation = {computer_move[0]} at depth {current_depth}")
             board.main_board.move(computer_move[1])
 
         else:
             legal_move_found = False
             while legal_move_found == False:
                 player_move = input_move(board.main_board.who_to_move)
+
+                if player_move.startswith("depth="):
+                    current_depth = int(player_move[6:])
+                    print(f"Depth has successfully changed to {current_depth}")
+                    continue
+
                 if player_move != None:
                     board.main_board.move(player_move)
                     legal_move_found = True
@@ -28,6 +35,10 @@ def player_vs_computer(player_w, player_b, depth):
         
 def input_move(player):
     player_move = input("Player: ")
+
+    if player_move.startswith("depth="):
+        return player_move
+
     for move in all_legal_moves(board.main_board, player):
         if move == player_move:
             return move
