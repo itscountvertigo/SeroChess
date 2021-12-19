@@ -1,3 +1,5 @@
+from pieces import queen, rook, bishop, knight
+
 import move_coords
 from fen_import import read_FEN
 
@@ -17,6 +19,7 @@ class Board():
         new_coords = coords[1]
 
         removed_piece = None
+        old_promotion_pawn = None
 
         for piece in self.pieces:
             if (piece.x, piece.y) == new_coords:
@@ -29,12 +32,16 @@ class Board():
                 if piece_type == "Pawn" or piece_type == "King" or piece_type == "Rook":
                     piece.in_starting_position = False
                     # en passant capturing
-                    if piece_type == 'Pawn' and (piece.enemy_en_passant_left or piece.enemy_en_passant_right):
-                        for i in self.pieces:
-                            if i == piece.enemy_en_passant_left:
-                                self.pieces.remove(i)
-                            elif i == piece.enemy_en_passant_right:
-                                self.pieces.remove(i)
+                    if piece_type == 'Pawn':
+                        if  piece.enemy_en_passant_left or piece.enemy_en_passant_right:
+                            for i in self.pieces:
+                                if i == piece.enemy_en_passant_left:
+                                    self.pieces.remove(i)
+                                elif i == piece.enemy_en_passant_right:
+                                    self.pieces.remove(i)
+                        
+                        if (piece.y == 6 and piece.color == 1) or (piece.y == 0 and piece.color == 0):
+                            old_promotion_pawn = piece
 
                 # Move the piece
                 piece.x = new_coords[0]
@@ -42,6 +49,18 @@ class Board():
 
         if removed_piece:
             self.pieces.remove(removed_piece)
+
+        if old_promotion_pawn:
+            print(move)
+            self.pieces.remove(old_promotion_pawn)
+            if move[4] == 'N':
+                self.pieces.append(knight.Knight(new_coords[0], new_coords[1], piece.color))
+            elif move[4] == 'B':
+                self.pieces.append(knight.Knight(new_coords[0], new_coords[1], piece.color))
+            elif move[4] == 'R':
+                self.pieces.append(knight.Knight(new_coords[0], new_coords[1], piece.color))
+            elif move[4] == 'Q':
+                self.pieces.append(knight.Knight(new_coords[0], new_coords[1], piece.color))
 
         self.moves.append(move)
         

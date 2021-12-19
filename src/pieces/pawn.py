@@ -129,8 +129,14 @@ class Pawn(pieces.Piece):
 
         legal_moves = []
         for each in legal_squares:
-            legal_moves.append(move_coords.coords_to_move(self.x, self.y, each[0], each[1]))
-            # legal_moves.append(chr(ord('`')+(self.x + 1)) + str(self.y + 1) + chr(ord('`')+(each[0] + 1)) + str(each[1] + 1))
+            legal_move = move_coords.coords_to_move(self.x, self.y, each[0], each[1])
+            if (each[1] == 7 or each[1] == 0):
+                legal_moves.append(legal_move + 'N')
+                legal_moves.append(legal_move + 'B')
+                legal_moves.append(legal_move + 'R')
+                legal_moves.append(legal_move + 'Q')
+            else:
+                legal_moves.append(move_coords.coords_to_move(self.x, self.y, each[0], each[1]))
 
         return legal_moves
 
