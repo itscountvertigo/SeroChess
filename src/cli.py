@@ -21,14 +21,16 @@ def player_vs_computer(player_w, player_b, depth):
             while legal_move_found == False:
                 player_move = input_move(board.main_board.who_to_move)
 
+                if player_move == None:
+                    continue
+
                 if player_move.startswith("depth="):
                     current_depth = int(player_move[6:])
                     print(f"Depth has successfully changed to {current_depth}")
                     continue
 
-                if player_move != None:
-                    board.main_board.move(player_move)
-                    legal_move_found = True
+                board.main_board.move(player_move)
+                legal_move_found = True
 
         rich.print(f"\nPosition: \n{pos_to_cli_board(board.main_board)} \n")
         
