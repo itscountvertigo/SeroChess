@@ -1,4 +1,4 @@
-from piece_heatmap import bishop_map, king_map, knight_map, pawn_map
+from piece_heatmap import bishop_map, king_map, knight_map, pawn_map, rook_map
 
 def evaluate(current_board):
     white_value = count_material(current_board, 1)
@@ -27,7 +27,10 @@ def evaluate(current_board):
                 evaluation -= bishop_map.black[piece.y][piece.x]
         
         elif piece_type == 'Rook':
-            pass
+            if piece.color == 1:
+                evaluation += rook_map.white[piece.y][piece.x]
+            else:
+                evaluation -= rook_map.black[piece.y][piece.x]
         
         elif piece_type == 'Queen':
             # temporarily use knight map until i have a queen map

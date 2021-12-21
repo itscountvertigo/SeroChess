@@ -1,6 +1,16 @@
 white = [[0 for _1 in range(8)] for _ in range(8)]
 black = [[0 for _1 in range(8)] for _ in range(8)]
 
+for y in range(8):
+    for x in range(8):
+        rank_w = 2 ** (y - 5.43) if y < 6 else -0.25 * (y - 6) ** 2 + 1.5
+        rank_b = (1/2) ** (y - 1.57) if y > 1 else -0.25 * (y - 1) ** 2 + 1.5
+
+        file = -0.05 * (x - 3.5) ** 2 + 1
+
+        white[y][x] = (rank_w + file) / 2
+        black[y][x] = (rank_b + file) / 2
+
 """
 import matplotlib.pyplot as plt
 
