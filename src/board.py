@@ -89,5 +89,4 @@ class Board():
         # There aren't any pieces on the square
         return 0
 
-main_board = Board(read_FEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"), 1, 1, 0, [])
-# main_board = Board(read_FEN("7k/7r/6r1/K7/8/8/8/8 b KQkq - 0 1"), 0, 1, 0, []) # mate in 2 puzzle
+main_board = Board(read_FEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"), 1, 1, 0, []) # STARTING POSITION

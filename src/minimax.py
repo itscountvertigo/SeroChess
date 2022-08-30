@@ -54,8 +54,9 @@ def minimax(current_board, who_to_move, alpha, beta, depth):
         has_king_w = False
 
         for piece in current_board.pieces:
-            if piece.__class__.__name__ == 'King':
+            if piece.__class__.__name__ == 'King' and piece.color == 1:
                 has_king_w = True
+                break
         
         if not has_king_w:
             return (-9999, "Black wins")
@@ -82,8 +83,9 @@ def minimax(current_board, who_to_move, alpha, beta, depth):
         has_king_b = False
 
         for piece in current_board.pieces:
-            if piece.__class__.__name__ == 'King':
+            if piece.__class__.__name__ == 'King'  and piece.color == 0:
                 has_king_b = True
+                break
         
         if not has_king_b:
             return (9999, "White wins")
