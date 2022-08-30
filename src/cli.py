@@ -1,6 +1,8 @@
 import time
 import rich
 
+from copy import deepcopy
+
 from minimax import minimax
 import board
 from legal_moves_list import all_legal_moves
@@ -10,7 +12,8 @@ def player_vs_computer(player_w, player_b, depth):
     while True:
         if (board.main_board.who_to_move == 1 and player_w == 'computer') or (board.main_board.who_to_move == 0 and player_b == 'computer'):
             start_time = time.perf_counter()
-            computer_move = minimax(board.main_board, board.main_board.who_to_move, (-9999, None), (9999, None), current_depth)
+            starting_board = deepcopy(board.main_board)
+            computer_move = minimax(board.main_board, board.main_board.who_to_move, (-9999, None), (9999, None), current_depth, starting_board)
             end_time = time.perf_counter()
 
             print(f"Computer: {computer_move[1]}, calculated in {end_time - start_time} seconds. Evaluation = {computer_move[0]} at depth {current_depth}")

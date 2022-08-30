@@ -1,4 +1,4 @@
-from copy import deepcopy
+# from copy import deepcopy
 import random
 
 import evaluate
@@ -7,10 +7,11 @@ from legal_moves_list import all_legal_moves
 from parse_openings import parse_openings
 openings = parse_openings()
 
-def minimax(current_board, who_to_move, alpha, beta, depth):
+def minimax(current_board, who_to_move, alpha, beta, depth, original_board):
     legal_moves_list = all_legal_moves(current_board, who_to_move)
 
     if depth == 0:
+        current_board = original_board
         return (evaluate.evaluate(current_board), None)
 
     global openings
@@ -34,16 +35,19 @@ def minimax(current_board, who_to_move, alpha, beta, depth):
     if openings != []:
         random_opening = openings[random.randint(0, len(openings) - 1)]
         print(f"move from opening: {random_opening}")
+        current_board = original_board
         return (None, random_opening[current_board.ply])
 
     if who_to_move == 1:
         evaluation = (-999, None)
 
         for move in legal_moves_list:
-            new_board = deepcopy(current_board)
-            new_board.move(move)
+            # new_board = deepcopy(current_board)
+            # new_board.move(move)
+
+            current_board.move(move)
             
-            minimax_result = minimax(new_board, not who_to_move, alpha, beta, depth - 1)
+            minimax_result = minimax(current_board, not who_to_move, alpha, beta, depth - 1, original_board)
             evaluation = evaluation if evaluation[0] >= minimax_result[0] else (minimax_result[0], move)
 
             if evaluation[0] >= beta[0]:
@@ -59,18 +63,22 @@ def minimax(current_board, who_to_move, alpha, beta, depth):
                 break
         
         if not has_king_w:
+            current_board = original_board
             return (-9999, "Black wins")
 
+        current_board = original_board
         return evaluation
 
     else:
         evaluation = (999, None)
 
         for move in legal_moves_list:
-            new_board = deepcopy(current_board)
-            new_board.move(move)
+            # new_board = deepcopy(current_board)
+            # new_board.move(move)
 
-            minimax_result = minimax(new_board, not who_to_move, alpha, beta, depth - 1)
+            current_board.move(move)
+
+            minimax_result = minimax(current_board, not who_to_move, alpha, beta, depth - 1, original_board)
             evaluation = evaluation if evaluation[0] <= minimax_result[0] else (minimax_result[0], move)
 
             # evaluation = min(evaluation, minimax(new_board, not who_to_move, alpha, beta, depth - 1))
@@ -88,6 +96,8 @@ def minimax(current_board, who_to_move, alpha, beta, depth):
                 break
         
         if not has_king_b:
+            current_board = original_board
             return (9999, "White wins")
 
+        current_board = original_board
         return evaluation
